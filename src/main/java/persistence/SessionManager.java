@@ -1,3 +1,4 @@
+package persistence;
 public class SessionManager {
     public void saveSession(Session session, String filename) {
         // Save to JSON or serialized format

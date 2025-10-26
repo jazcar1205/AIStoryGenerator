@@ -1,3 +1,4 @@
+package service;
 public class APIErrorHandler {
     public String handleError(Exception e) {
         if (e instanceof RateLimitException) {
