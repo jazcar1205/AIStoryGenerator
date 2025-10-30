@@ -1,5 +1,6 @@
 package view;
 
+import controller.AIController;
 import javax.swing.*;
 
 public class MainFrame extends JFrame
@@ -8,6 +9,7 @@ public class MainFrame extends JFrame
     private JTextArea outputArea;
     private JButton generateButton;
     private JComboBox<String> strategySelector;
+    private AIController controller;
 
     public MainFrame() {
 	  setTitle("AI Story Generator");
