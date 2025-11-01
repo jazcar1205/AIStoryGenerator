@@ -63,6 +63,7 @@ public class OpenAIService
         }
     }
 
+    /*
     public String generateText(String prompt, double temperature, int maxTokens)
     {
         // HTTP request to OpenAI API
@@ -75,4 +76,6 @@ public class OpenAIService
         // Send request and handle response
         return sendRequest(requestBody);
     }
+
+     */
 }

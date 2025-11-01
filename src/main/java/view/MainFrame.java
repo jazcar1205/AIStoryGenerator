@@ -2,42 +2,52 @@ package view;
 
 import controller.AIController;
 import javax.swing.*;
+import java.awt.*;
 
 public class MainFrame extends JFrame
 {
     private JTextArea inputArea;
     private JTextArea outputArea;
     private JButton generateButton;
-    private JComboBox<String> strategySelector;
+    private ControlPanel controlPanel;
+
     private AIController controller;
 
     public MainFrame() {
 	  setTitle("AI Story Generator");
 	  setSize(800, 600);
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
-
 	  initComponents();
-	  //layoutComponents();
+	  layoutComponents();
+	  setVisible(true);
     }
 
+    /**
+     * Initializes all components in the frame.
+     */
     private void initComponents() {
-	  inputArea = new JTextArea(10, 40);
+	  inputArea = new JTextArea(10, 20);
 	  inputArea.setLineWrap(true);
 	  inputArea.setBorder(BorderFactory.createTitledBorder("Input"));
 
-	  outputArea = new JTextArea(15, 40);
+	  outputArea = new JTextArea(10, 40);
 	  outputArea.setEditable(false);
 	  outputArea.setLineWrap(true);
 	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
 
 	  generateButton = new JButton("Generate");
 	  generateButton.addActionListener(e -> onGenerate());
+	  controlPanel = new ControlPanel();
+    }
 
-	  strategySelector = new JComboBox<>(new String[]{
-		    "Creative Writing",
-		    "Professional Writing",
-		    "Academic Writing"
-	  });
+    /**
+     * Adds all components to the frame and organizes them in the layout.
+     */
+    private void layoutComponents()
+    {
+	  add(controlPanel, BorderLayout.WEST);
+	  add(outputArea, BorderLayout.EAST);
+	  add(generateButton, BorderLayout.SOUTH);
     }
 
     private void onGenerate() {
@@ -49,7 +59,8 @@ public class MainFrame extends JFrame
 		@Override
 		protected String doInBackground() throws Exception {
 		    String input = inputArea.getText();
-		    return controller.generate(input);
+		    String testInput = "Genre: " + controlPanel.getGenre();
+		    return testInput;
 		}
 
 		@Override
@@ -69,5 +80,13 @@ public class MainFrame extends JFrame
 		    }
 		}
 	  }.execute();
+    }
+
+    /**
+     * Run that app!
+     * @param args
+     */
+    public static void main(String[] args) {
+	  SwingUtilities.invokeLater(MainFrame::new);
     }
 }

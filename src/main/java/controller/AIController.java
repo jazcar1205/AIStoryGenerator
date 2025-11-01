@@ -11,6 +11,6 @@ public class AIController
     //just for testing GUI
     public String generate(String input)
     {
-	  return "Placeholder";
+	  return input;
     }
 }

@@ -1,6 +1,6 @@
 package service;
 public class APIErrorHandler {
-    public String handleError(Exception e) {
+   /* public String handleError(Exception e) {
         if (e instanceof RateLimitException) {
             return "Rate limit exceeded. Please wait 60 seconds.";
         } else if (e instanceof InvalidAPIKeyException) {
@@ -13,4 +13,5 @@ public class APIErrorHandler {
             return "An unexpected error occurred: " + e.getMessage();
         }
     }
+    */
 }

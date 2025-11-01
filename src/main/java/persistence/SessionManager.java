@@ -4,7 +4,9 @@ public class SessionManager {
         // Save to JSON or serialized format
     }
 
-    public Session loadSession(String filename) {
+    public Session loadSession(String filename)
+    {
         // Load and deserialize
+        return null;
     }
 }
