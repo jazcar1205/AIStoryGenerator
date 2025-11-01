@@ -3,27 +3,35 @@ package view;
 import view.components.LabeledTextField;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class ControlPanel extends JPanel
 {
+    private JLabel label;
     private LabeledTextField genreField;
     private LabeledTextField characterField;
+    private LabeledTextField worldBuilding;
 
     public ControlPanel()
     {
+	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+	  setSize(300, 600);
 	  initComponents();
 	  initLayout();
     }
 
     private void initComponents()
     {
-	  genreField = new LabeledTextField("Genre", 1,16);
-	  characterField = new LabeledTextField("Character", 16,16);
+	  label = new JLabel("Options");
+	  genreField = new LabeledTextField("Genre: ", 1,16);
+	  characterField = new LabeledTextField("Characters: ", 20,16);
+	  worldBuilding = new LabeledTextField("World Building: ", 20,16);
     }
     private void initLayout()
     {
+	  add(label);
 	  add(genreField);
+	  add(characterField);
+	  add(worldBuilding);
     }
 
     /**

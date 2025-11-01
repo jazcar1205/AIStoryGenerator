@@ -6,6 +6,7 @@ import java.awt.*;
 
 public class MainFrame extends JFrame
 {
+    private JScrollPane scrollPane;
     private JTextArea inputArea;
     private JTextArea outputArea;
     private JButton generateButton;
@@ -15,10 +16,11 @@ public class MainFrame extends JFrame
 
     public MainFrame() {
 	  setTitle("AI Story Generator");
-	  setSize(800, 600);
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
 	  layoutComponents();
+	  pack();
+	  setSize(Toolkit.getDefaultToolkit().getScreenSize());
 	  setVisible(true);
     }
 
@@ -38,6 +40,9 @@ public class MainFrame extends JFrame
 	  generateButton = new JButton("Generate");
 	  generateButton.addActionListener(e -> onGenerate());
 	  controlPanel = new ControlPanel();
+
+	  scrollPane = new JScrollPane(controlPanel);
+	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
     /**
@@ -45,7 +50,7 @@ public class MainFrame extends JFrame
      */
     private void layoutComponents()
     {
-	  add(controlPanel, BorderLayout.WEST);
+	  add(scrollPane, BorderLayout.WEST);
 	  add(outputArea, BorderLayout.EAST);
 	  add(generateButton, BorderLayout.SOUTH);
     }
