@@ -20,7 +20,8 @@ public class MainFrame extends JFrame
 	  initComponents();
 	  layoutComponents();
 	  pack();
-	  setSize(Toolkit.getDefaultToolkit().getScreenSize());
+	  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	  setSize((int) screenSize.getWidth(), (int) (screenSize.getHeight() - 50));
 	  setVisible(true);
     }
 
@@ -39,7 +40,9 @@ public class MainFrame extends JFrame
 
 	  generateButton = new JButton("Generate");
 	  generateButton.addActionListener(e -> onGenerate());
+
 	  controlPanel = new ControlPanel();
+	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

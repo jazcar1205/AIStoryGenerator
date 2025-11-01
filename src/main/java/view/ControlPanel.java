@@ -14,7 +14,6 @@ public class ControlPanel extends JPanel
     public ControlPanel()
     {
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-	  setSize(300, 600);
 	  initComponents();
 	  initLayout();
     }
@@ -22,9 +21,9 @@ public class ControlPanel extends JPanel
     private void initComponents()
     {
 	  label = new JLabel("Options");
-	  genreField = new LabeledTextField("Genre: ", 1,16);
-	  characterField = new LabeledTextField("Characters: ", 20,16);
-	  worldBuilding = new LabeledTextField("World Building: ", 20,16);
+	  genreField = new LabeledTextField("Genre ", 1,16);
+	  characterField = new LabeledTextField("Characters ", 10,30);
+	  worldBuilding = new LabeledTextField("World Building ", 10,30);
     }
     private void initLayout()
     {
