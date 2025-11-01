@@ -8,6 +8,7 @@ import java.awt.*;
 public class ControlPanel extends JPanel
 {
     private LabeledTextField genreField;
+    private LabeledTextField characterField;
 
     public ControlPanel()
     {
@@ -17,7 +18,8 @@ public class ControlPanel extends JPanel
 
     private void initComponents()
     {
-	  genreField = new LabeledTextField("Genre", 16);
+	  genreField = new LabeledTextField("Genre", 1,16);
+	  characterField = new LabeledTextField("Character", 16,16);
     }
     private void initLayout()
     {
