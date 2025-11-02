@@ -4,6 +4,9 @@ import controller.AIController;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Creates the main frame of the pogram.
+ */
 public class MainFrame extends JFrame
 {
     private JScrollPane scrollPane;

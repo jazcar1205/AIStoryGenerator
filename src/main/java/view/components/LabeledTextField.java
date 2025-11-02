@@ -2,10 +2,19 @@ package view.components;
 
 import javax.swing.*;
 
+/**
+ * Creates a text field and a label.
+ */
 public class LabeledTextField extends JPanel
 {
     private final JTextArea selector;
 
+    /**
+     *
+     * @param labelText The text for the label of the text field.
+     * @param rows	The number of rows in the text box.
+     * @param columns	The number of columns in the text box.
+     */
     public LabeledTextField(String labelText, int rows, int columns)
     {
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -20,6 +29,10 @@ public class LabeledTextField extends JPanel
 	  add(scroll);
     }
 
+    /**
+     * Helps to get the text from the selector.
+     * @return contents of the provided text box.
+     */
     public String getText()
     {
 	  return selector.getText();

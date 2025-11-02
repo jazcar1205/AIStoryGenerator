@@ -5,6 +5,9 @@ import view.components.LabeledTextField;
 
 import javax.swing.*;
 
+/**
+ * Creates the control panel.
+ */
 public class ControlPanel extends JPanel
 {
     private JLabel label;
