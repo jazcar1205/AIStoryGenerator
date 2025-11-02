@@ -9,6 +9,10 @@ import java.awt.*;
 public class SaveDialog extends JDialog
 {
     private LabeledTextField nameField;
+
+    /**
+     * Creates a save dialog
+     */
     public SaveDialog()
     {
 	super();
@@ -35,6 +39,10 @@ public class SaveDialog extends JDialog
 	setSize(200, 150);
     }
 
+    /**
+     * Get the file name from the enter field.
+     * @return The value in the text field.
+     */
     public String getFileName()
     {
 	  return nameField.getText();

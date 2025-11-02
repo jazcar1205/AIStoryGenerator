@@ -3,6 +3,9 @@ package view.components;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Create a dialog to load a file.
+ */
 public class LoadDialog extends JDialog
 {
     private LabeledComboBox nameField;
@@ -36,6 +39,10 @@ public class LoadDialog extends JDialog
 	  setSize(200, 150);
     }
 
+    /**
+     * Get the file name from the enter field.
+     * @return The value in the selector.
+     */
     public String getFileName()
     {
 	  return nameField.getSelection();

@@ -10,6 +10,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Panel for file options like saving, loading, and tagging.
+ */
 public class FileOptionsPanel extends JPanel
 {
     private CustomButton saveButton;
@@ -19,6 +22,10 @@ public class FileOptionsPanel extends JPanel
     private ArrayList<String> tags;
     private String fileName;
 
+    /**
+     * Constructs a file options pane, requiring the name for the current file.
+     * @param fileName
+     */
     public FileOptionsPanel(String fileName)
     {
 	  this.fileName = fileName;
@@ -32,6 +39,8 @@ public class FileOptionsPanel extends JPanel
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
+		this.fileName = sd.getFileName();
+		//need save actions from session.
 		sd.setVisible(true);
 	  });
 	  add(saveButton);
@@ -39,17 +48,20 @@ public class FileOptionsPanel extends JPanel
 	  add(loadButton);
 	  loadButton.addActionListener(e -> {
 		LoadDialog ld = new LoadDialog();
+		this.fileName = ld.getFileName();
+		//need load actions from session.
 		ld.setVisible(true);
 	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(tagsLabel);
 	  tagsLabel.setText(loadTags());
 	  add(addTags);
-	  addTags.addActionListener(e -> {
-
-	  });
+	  addTags.addActionListener(e -> readTags());
     }
 
+    /**
+     * Reads the tags written in the tags field.
+     */
     private void readTags()
     {
 	  Scanner scanner = new Scanner(tagsLabel.getText());
@@ -61,6 +73,10 @@ public class FileOptionsPanel extends JPanel
 	  }
     }
 
+    /**
+     * Loads the tags into the
+     * @return
+     */
     private String loadTags()
     {
 	  //load tags from fileName.

@@ -37,6 +37,10 @@ public class LabeledComboBox extends JPanel
 	  add(comboBox);
     }
 
+    /**
+     * Access the selection of the combo box.
+     * @return The selected item.
+     */
     public String getSelection()
     {
 	  return selection;

@@ -16,16 +16,22 @@ public class ControlPanel extends JPanel
     private LabeledTextField worldBuilding;
     private LabeledTextField styleField;
 
+    /**
+     * Create a control panel.
+     */
     public ControlPanel()
     {
+	  setBorder(BorderFactory.createTitledBorder("Options"));
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  initComponents();
 	  initLayout();
     }
 
+    /**
+     * Initialize the componets
+     */
     private void initComponents()
     {
-	  setBorder(BorderFactory.createTitledBorder("Options"));
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
 		    new String[] {"Child-Friendly", "Average", "Complex"});
@@ -34,6 +40,10 @@ public class ControlPanel extends JPanel
 	  characterField = new LabeledTextField("Characters ", 10,30);
 	  worldBuilding = new LabeledTextField("World Building ", 10,30);
     }
+
+    /**
+     * Add the components to the layout.
+     */
     private void initLayout()
     {
 	  add(lengthField);
@@ -58,6 +68,11 @@ public class ControlPanel extends JPanel
 	  return "Fantasy";
     }
 
+    /**
+     * Helper function to get the values out of each of the various components.
+     * Mostly just for testing to make sure the correct values are there.
+     * @return a string version of the fields.
+     */
     public String getValues()
     {
 	  StringBuilder values = new StringBuilder();

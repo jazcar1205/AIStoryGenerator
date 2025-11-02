@@ -20,6 +20,9 @@ public class MainFrame extends JFrame
 
     private AIController controller;
 
+    /**
+     * Creates the main frame, initilizes components, and sets up layout.
+     */
     public MainFrame() {
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -70,6 +73,9 @@ public class MainFrame extends JFrame
 	  pack();
     }
 
+    /**
+     * Used to send info to the API to generate text.
+     */
     private void onGenerate() {
 	  generateButton.setEnabled(false);
 	  generateButton.setText("Generating...");
