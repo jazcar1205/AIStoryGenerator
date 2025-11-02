@@ -4,6 +4,8 @@ import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 /**
  * Creates the control panel.
@@ -29,7 +31,8 @@ public class ControlPanel extends JPanel
     {
 	  label = new JLabel("Options");
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
-	  complexityField = new LabeledComboBox("Complexity", new String[] {"Medium", "Long"});
+	  complexityField = new LabeledComboBox("Complexity",
+		    new String[] {"Child-Friendly", "Average", "Complex"});
 	  genreField = new LabeledTextField("Genre ", 1,16);
 	  styleField = new LabeledTextField("Style ", 1,16);
 	  characterField = new LabeledTextField("Characters ", 10,30);
@@ -58,5 +61,17 @@ public class ControlPanel extends JPanel
 		return genreField.getText();
 	  }
 	  return "Fantasy";
+    }
+
+    public String getValues()
+    {
+	  StringBuilder values = new StringBuilder();
+	  values.append("Length: " + lengthField.getSelection());
+	  values.append("\nComplexity: " + complexityField.getSelection());
+	  values.append("\nGenre: " + genreField.getText());
+	  values.append("\nStyle: " + styleField.getText());
+	  values.append("\nCharacters: " + characterField.getText());
+	  values.append("\nWorld Building: " + worldBuilding.getText());
+	  return values.toString();
     }
 }

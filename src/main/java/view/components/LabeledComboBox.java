@@ -1,6 +1,7 @@
 package view.components;
 
 import javax.swing.*;
+import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 
 /**
@@ -10,6 +11,7 @@ public class LabeledComboBox extends JPanel
 {
 
     private JComboBox<String> comboBox;
+    private String selection;
     /**
      *
      * @param labelText The text for the label.
@@ -19,18 +21,23 @@ public class LabeledComboBox extends JPanel
     {
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  JLabel label = new JLabel(labelText);
+	  selection = options[0]; // first option is default.
 	  comboBox = new JComboBox<>(options);
+	  comboBox.addItemListener(new ItemListener()
+	  {
+		@Override
+		public void itemStateChanged(ItemEvent e)
+		{
+		    selection = comboBox.getSelectedItem().toString();
+		}
+	  });
 	  setBorder(BorderFactory.createEmptyBorder(5, 10, 10, 10));
 	  add(label);
 	  add(comboBox);
     }
 
-    /**
-     * Function to add a listener onto the custom box.
-     * @param listener
-     */
-    public void addItemListener(ItemListener listener)
+    public String getSelection()
     {
-	  comboBox.addItemListener(listener);
+	  return selection;
     }
 }

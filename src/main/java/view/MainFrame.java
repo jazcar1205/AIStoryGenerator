@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 /**
- * Creates the main frame of the pogram.
+ * Creates the main frame of the program.
  */
 public class MainFrame extends JFrame
 {
@@ -70,8 +70,7 @@ public class MainFrame extends JFrame
 		@Override
 		protected String doInBackground() throws Exception {
 		    String input = inputArea.getText();
-		    String testInput = "Genre: " + controlPanel.getGenre();
-		    return testInput;
+		    return controlPanel.getValues();
 		}
 
 		@Override
