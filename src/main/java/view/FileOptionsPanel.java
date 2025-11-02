@@ -15,6 +15,7 @@ public class FileOptionsPanel extends JPanel
 
     public FileOptionsPanel(String tags)
     {
+	  setBorder(BorderFactory.createTitledBorder("File Management"));
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  saveButton = new CustomButton("Save");
 	  loadButton = new CustomButton("Load");

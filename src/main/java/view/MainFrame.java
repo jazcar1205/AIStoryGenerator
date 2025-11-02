@@ -1,6 +1,8 @@
 package view;
 
 import controller.AIController;
+import view.components.CustomButton;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -9,9 +11,10 @@ import java.awt.*;
  */
 public class MainFrame extends JFrame
 {
+    private JLabel fileNameLabel;
     private JScrollPane scrollPane;
     private JTextArea outputArea;
-    private JButton generateButton;
+    private CustomButton generateButton;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
 
@@ -32,12 +35,15 @@ public class MainFrame extends JFrame
      * Initializes all components in the frame.
      */
     private void initComponents() {
+	  fileNameLabel = new JLabel("Untitled.txt");
+	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 	  outputArea = new JTextArea(10, 100);
 	  outputArea.setEditable(false);
 	  outputArea.setLineWrap(true);
 	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
 
-	  generateButton = new JButton("Generate");
+	  generateButton = new CustomButton("Generate");
 	  generateButton.setSize(50, 50);
 	  generateButton.addActionListener(e -> onGenerate());
 
@@ -57,6 +63,7 @@ public class MainFrame extends JFrame
      */
     private void layoutComponents()
     {
+	  add(fileNameLabel, BorderLayout.NORTH);
 	  add(scrollPane, BorderLayout.WEST);
 	  add(outputArea, BorderLayout.CENTER);
 	  add(fileOptionsPanel, BorderLayout.EAST);
