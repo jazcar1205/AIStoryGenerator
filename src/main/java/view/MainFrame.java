@@ -10,7 +10,6 @@ import java.awt.*;
 public class MainFrame extends JFrame
 {
     private JScrollPane scrollPane;
-    private JTextArea inputArea;
     private JTextArea outputArea;
     private JButton generateButton;
     private ControlPanel controlPanel;
@@ -32,10 +31,6 @@ public class MainFrame extends JFrame
      * Initializes all components in the frame.
      */
     private void initComponents() {
-	  inputArea = new JTextArea(10, 20);
-	  inputArea.setLineWrap(true);
-	  inputArea.setBorder(BorderFactory.createTitledBorder("Input"));
-
 	  outputArea = new JTextArea(10, 40);
 	  outputArea.setEditable(false);
 	  outputArea.setLineWrap(true);
@@ -69,7 +64,6 @@ public class MainFrame extends JFrame
 	  new SwingWorker<String, Void>() {
 		@Override
 		protected String doInBackground() throws Exception {
-		    String input = inputArea.getText();
 		    return controlPanel.getValues();
 		}
 
