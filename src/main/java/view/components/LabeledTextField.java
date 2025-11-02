@@ -38,4 +38,9 @@ public class LabeledTextField extends JPanel
     {
 	  return selector.getText();
     }
+
+    public void setText(String text)
+    {
+	  selector.setText(text);
+    }
 }
