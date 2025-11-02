@@ -2,6 +2,7 @@ package view;
 
 import view.components.CustomButton;
 import view.components.LabeledTextField;
+import view.components.LoadDialog;
 import view.components.SaveDialog;
 
 import javax.swing.*;
@@ -30,6 +31,10 @@ public class FileOptionsPanel extends JPanel
 	  add(saveButton);
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(loadButton);
+	  loadButton.addActionListener(e -> {
+		LoadDialog ld = new LoadDialog();
+		ld.setVisible(true);
+	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(tagsLabel);
 	  add(addTags);
