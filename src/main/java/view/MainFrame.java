@@ -13,6 +13,7 @@ public class MainFrame extends JFrame
     private JTextArea outputArea;
     private JButton generateButton;
     private ControlPanel controlPanel;
+    private FileOptionsPanel fileOptionsPanel;
 
     private AIController controller;
 
@@ -43,8 +44,12 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
+	  fileOptionsPanel = new FileOptionsPanel("test");
+	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
+
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
     }
 
     /**
@@ -54,6 +59,7 @@ public class MainFrame extends JFrame
     {
 	  add(scrollPane, BorderLayout.WEST);
 	  add(outputArea, BorderLayout.CENTER);
+	  add(fileOptionsPanel, BorderLayout.EAST);
 	  add(generateButton, BorderLayout.SOUTH);
 	  pack();
     }
