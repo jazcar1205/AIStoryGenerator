@@ -31,12 +31,13 @@ public class MainFrame extends JFrame
      * Initializes all components in the frame.
      */
     private void initComponents() {
-	  outputArea = new JTextArea(10, 40);
+	  outputArea = new JTextArea(10, 100);
 	  outputArea.setEditable(false);
 	  outputArea.setLineWrap(true);
 	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
 
 	  generateButton = new JButton("Generate");
+	  generateButton.setSize(50, 50);
 	  generateButton.addActionListener(e -> onGenerate());
 
 	  controlPanel = new ControlPanel();
@@ -52,8 +53,9 @@ public class MainFrame extends JFrame
     private void layoutComponents()
     {
 	  add(scrollPane, BorderLayout.WEST);
-	  add(outputArea, BorderLayout.EAST);
+	  add(outputArea, BorderLayout.CENTER);
 	  add(generateButton, BorderLayout.SOUTH);
+	  pack();
     }
 
     private void onGenerate() {

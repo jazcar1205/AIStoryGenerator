@@ -4,15 +4,11 @@ import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
 import javax.swing.*;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-
 /**
  * Creates the control panel.
  */
 public class ControlPanel extends JPanel
 {
-    private JLabel label;
     private LabeledComboBox lengthField;
     private LabeledComboBox complexityField;
     private LabeledTextField genreField;
@@ -29,7 +25,7 @@ public class ControlPanel extends JPanel
 
     private void initComponents()
     {
-	  label = new JLabel("Options");
+	  setBorder(BorderFactory.createTitledBorder("Options"));
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
 		    new String[] {"Child-Friendly", "Average", "Complex"});
@@ -40,7 +36,6 @@ public class ControlPanel extends JPanel
     }
     private void initLayout()
     {
-	  add(label);
 	  add(lengthField);
 	  add(complexityField);
 	  add(genreField);

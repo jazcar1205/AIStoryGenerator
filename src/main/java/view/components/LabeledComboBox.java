@@ -21,6 +21,7 @@ public class LabeledComboBox extends JPanel
     {
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  JLabel label = new JLabel(labelText);
+	  label.setAlignmentX(CENTER_ALIGNMENT);
 	  selection = options[0]; // first option is default.
 	  comboBox = new JComboBox<>(options);
 	  comboBox.addItemListener(new ItemListener()

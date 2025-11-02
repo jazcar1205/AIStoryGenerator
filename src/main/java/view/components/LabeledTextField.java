@@ -19,6 +19,7 @@ public class LabeledTextField extends JPanel
     {
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  JLabel label = new JLabel(labelText);
+	  label.setAlignmentX(CENTER_ALIGNMENT);
 	  this.selector = new JTextArea(rows,columns);
 	  selector.setLineWrap(true);
 	  selector.setVisible(true);
