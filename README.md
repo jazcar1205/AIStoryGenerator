@@ -1,8 +1,8 @@
 # AI Story Generator
 
 ## Team Members
-- Jazmin Carlos (ID)
-- Cedar Hudgens (ID)
+- Jazmin Carlos 
+- Cedar Hudgens 
 
 ## Project Description
 The Interactive Storytelling Application uses AI to create stories based on what the user writes or chooses. Users can pick a genre, make characters, and shape the world of their story. The app can build different types of stories and let users save or export them.
@@ -13,10 +13,11 @@ The Interactive Storytelling Application uses AI to create stories based on what
 - [ ] Extra credit feature
 
 ## Design Patterns Used
-1. **Strategy Pattern** - Describe where and why
-2. **Factory Pattern** - Describe where and why
-3. **Observer Pattern** - Describe where and why
-
+1. **Strategy Pattern** - Mutiple story generation strategies. 
+   - Horror, Romance, Fantasy, SciFi
+2. **Factory Pattern** - Create different API clients
+3. **Observer Pattern** - Ui updates when story and/ or model changes
+3. **Singleton Pattern** - Configuration manager or API rate limiter
 ## Setup Instructions
 
 ### Prerequisites

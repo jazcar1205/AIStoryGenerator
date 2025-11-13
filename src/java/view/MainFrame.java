@@ -1,6 +1,5 @@
 package view;
 
-import controller.AIController;
 import view.components.CustomButton;
 
 import javax.swing.*;
