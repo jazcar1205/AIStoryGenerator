@@ -45,11 +45,12 @@ public class FileOptionsPanel extends JPanel
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
+		sd.setVisible(true);
 		this.fileName = sd.getFileName();
-		System.out.println(this.fileName);
+		//System.out.println("File name" + this.fileName);
 		//need save actions from session.
 		sessionManager.saveSession(session, this.fileName);
-		sd.setVisible(true);
+		sd.setVisible(false);
 	  });
 	  add(saveButton);
 	  add(Box.createRigidArea(new Dimension(0,20)));
@@ -82,6 +83,10 @@ public class FileOptionsPanel extends JPanel
 	  }
     }
 
+    public String getFileName()
+    {
+	  return fileName;
+    }
     /**
      * Loads the tags into the
      * @return

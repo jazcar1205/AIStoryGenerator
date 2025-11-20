@@ -9,6 +9,7 @@ import java.awt.*;
 public class SaveDialog extends JDialog
 {
     private LabeledTextField nameField;
+    private String fileName;
 
     /**
      * Creates a save dialog
@@ -27,7 +28,8 @@ public class SaveDialog extends JDialog
 	JButton okButton = new JButton("OK");
 	okButton.addActionListener(e -> {
 	    //call save function here.
-	    System.out.println("Saving... " + nameField.getText());
+	    //System.out.println("Saving... " + nameField.getText());
+	    fileName = nameField.getText();
 	    dispose();
 	});
 	JButton cancelButton = new JButton("Cancel");
@@ -45,6 +47,6 @@ public class SaveDialog extends JDialog
      */
     public String getFileName()
     {
-	  return nameField.getText();
+	  return fileName;
     }
 }

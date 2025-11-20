@@ -13,17 +13,17 @@ public class SessionManager {
     private static final Logger logger = Logger.getLogger(SessionManager.class.getName());
 
     public void saveSession(Session session, String filename) {
+        Path filePath = Path.of("save_files/", filename);
         try {
             JSONObject json = new JSONObject();
             json.put("story", session.getStory());
             json.put("prompt", session.getPrompt());
             json.put("strategyName", session.getStrategyName());
-            Path filePath = Path.of("save_files/", filename);
-            System.out.println(filePath);
+            //System.out.println(filePath);
             Files.writeString(filePath, json.toString(4));
-            logger.info("Session saved to " + filename);
+            logger.info("Session saved to " + filePath);
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to save session to " + filename, e);
+            logger.log(Level.SEVERE, "Failed to save session to " + filePath.toString(), e);
         }
     }
     public Session loadSession(String filename) {
