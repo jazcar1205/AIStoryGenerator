@@ -1,0 +1,17 @@
+package model;
+
+import service.OpenAIService;
+
+public class RomanceStrategy extends StoryStrategy
+{
+
+    public RomanceStrategy(OpenAIService service) {
+        super(service);
+    }
+
+    @Override
+    public String generateStory(String prompt, Length length, Complexity complexity) throws Exception {
+        String fullPrompt = length + " " + complexity + " romance story: " + prompt;
+        return service.generateText(fullPrompt, 0.7, 500);
+    }
+}
