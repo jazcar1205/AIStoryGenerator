@@ -1,10 +1,12 @@
 package view;
 
+import model.StoryModel;
 import view.components.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
 
+import controller.MainController;
 /**
  * Creates the main frame of the program.
  */
@@ -17,11 +19,18 @@ public class MainFrame extends JFrame
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
 
-    private AIController controller;
+    private MainController controller;
+    private StoryModel storyModel;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
      */
+    public MainFrame(StoryModel storyModel, MainController controller)
+    {
+	  this.controller = controller;
+	  this.storyModel = storyModel;
+	  new MainFrame();
+    }
     public MainFrame() {
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
