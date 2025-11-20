@@ -13,7 +13,7 @@ public class APIClient {
     private static APIClient instance = null;
     private static final String API_URL = "https://api.openai.com/v1/chat/completions";
     private final OkHttpClient client;
-    private String apiKey;
+    private final String apiKey;
 
     private APIClient() {
         client = new OkHttpClient();
