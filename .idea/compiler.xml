@@ -9,8 +9,5 @@
         <module name="AIStoryGenerator" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="AIStoryGenerator" target="23" />
-    </bytecodeTargetLevel>
   </component>
 </project>
