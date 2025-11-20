@@ -22,17 +22,17 @@ public class FileOptionsPanel extends JPanel
     private LabeledTextField tagsLabel;
     private CustomButton addTags;
     private ArrayList<String> tags;
-    private String fileName;
     private SessionManager sessionManager;
     private Session session;
+    private MainFrame parent;
 
     /**
      * Constructs a file options pane, requiring the name for the current file.
      * @param fileName
      */
-    public FileOptionsPanel(String fileName, Session session)
+    public FileOptionsPanel(MainFrame parent, Session session)
     {
-	  this.fileName = fileName;
+	  this.parent = parent;
 	  this.tags = new ArrayList<>(); //need to set this to what is gotten from the file.
 	  sessionManager = new SessionManager();
 	  this.session = session;
@@ -46,10 +46,10 @@ public class FileOptionsPanel extends JPanel
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
 		sd.setVisible(true);
-		this.fileName = sd.getFileName();
 		//System.out.println("File name" + this.fileName);
 		//need save actions from session.
-		sessionManager.saveSession(session, this.fileName);
+		sessionManager.saveSession(session, sd.getFileName());
+		parent.setFileNameLabel(sd.getFileName());
 		sd.setVisible(false);
 	  });
 	  add(saveButton);
@@ -57,9 +57,9 @@ public class FileOptionsPanel extends JPanel
 	  add(loadButton);
 	  loadButton.addActionListener(e -> {
 		LoadDialog ld = new LoadDialog();
-		this.fileName = ld.getFileName();
 		//need load actions from session.
-		sessionManager.loadSession(this.fileName);
+		sessionManager.loadSession(ld.getFileName());
+		parent.setFileNameLabel(ld.getFileName());
 		ld.setVisible(true);
 	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
@@ -83,9 +83,9 @@ public class FileOptionsPanel extends JPanel
 	  }
     }
 
-    public String getFileName()
+    public String getFilePath()
     {
-	  return fileName;
+	  return sessionManager.getFilePath().toString();
     }
     /**
      * Loads the tags into the

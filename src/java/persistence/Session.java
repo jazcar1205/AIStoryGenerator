@@ -3,6 +3,7 @@ package persistence;
 
 public class Session{
 
+    private String filePath;
     private String story;
     private String prompt;
     private String strategyName;
@@ -14,6 +15,12 @@ public class Session{
     }
 
     public Session(String story, String prompt, String strategyName) {
+        this.story = story;
+        this.prompt = prompt;
+        this.strategyName = strategyName;
+    }
+
+    public Session(String filePath, String story, String prompt, String strategyName) {
         this.story = story;
         this.prompt = prompt;
         this.strategyName = strategyName;

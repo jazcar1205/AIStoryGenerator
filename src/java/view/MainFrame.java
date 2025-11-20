@@ -64,11 +64,16 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
-	  fileOptionsPanel = new FileOptionsPanel("untitled", session);
+	  fileOptionsPanel = new FileOptionsPanel(this, "untitled", session);
 	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    }
+
+    public void setFileNameLabel(String fileNameLabel)
+    {
+	  this.fileNameLabel.setText(fileNameLabel);
     }
 
     /**

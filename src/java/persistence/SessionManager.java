@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 public class SessionManager {
 
     private static final Logger logger = Logger.getLogger(SessionManager.class.getName());
-
+    private Path filePath;
     public void saveSession(Session session, String filename) {
-        Path filePath = Path.of("save_files/", filename);
+        this.filePath = Path.of("save_files/", filename);
         try {
             JSONObject json = new JSONObject();
             json.put("story", session.getStory());
@@ -27,6 +27,7 @@ public class SessionManager {
         }
     }
     public Session loadSession(String filename) {
+        this.filePath = Path.of("save_files/", filename);
         try {
             String content = Files.readString(Path.of(filename));
             JSONObject json = new JSONObject(content);
@@ -36,11 +37,16 @@ public class SessionManager {
             session.setPrompt(json.optString("prompt"));
             session.setStrategyName(json.optString("strategyName"));
 
-            logger.info("Session loaded from " + filename);
+            logger.info("Session loaded from " + filePath);
             return session;
         } catch (IOException e) {
-            logger.log(Level.SEVERE, "Failed to load session from " + filename, e);
+            logger.log(Level.SEVERE, "Failed to load session from " + filePath, e);
             return null;
         }
+    }
+
+    public Path getFilePath()
+    {
+        return filePath;
     }
 }
