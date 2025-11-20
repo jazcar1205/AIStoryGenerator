@@ -35,7 +35,7 @@ public class MainController {
             }).start();
         } else {
             // Default: use APIClient directly (if implemented)
-            APIClient client = APIClient.getInstance();
+            /* APIClient client = APIClient.getInstance();
             client.generateStoryAsync(
                     prompt,
                     story -> SwingUtilities.invokeLater(() -> model.setStory(story)),
@@ -43,6 +43,8 @@ public class MainController {
                             JOptionPane.showMessageDialog(null, APIErrorHandler.handleError(error))
                     )
             );
+
+             */
         }
     }
 }
