@@ -7,7 +7,11 @@ public class Session{
     private String prompt;
     private String strategyName;
 
-    public Session() { }
+    public Session() {
+        this.story = "Untitled";
+        this.prompt = "";
+        this.strategyName = "Fantasy";
+    }
 
     public Session(String story, String prompt, String strategyName) {
         this.story = story;

@@ -11,7 +11,7 @@ public class ControlPanel extends JPanel
 {
     private LabeledComboBox lengthField;
     private LabeledComboBox complexityField;
-    private LabeledTextField genreField;
+    private LabeledComboBox genreField;
     private LabeledTextField characterField;
     private LabeledTextField worldBuilding;
     private LabeledTextField styleField;
@@ -35,7 +35,7 @@ public class ControlPanel extends JPanel
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
 		    new String[] {"Child-Friendly", "Average", "Complex"});
-	  genreField = new LabeledTextField("Genre ", 1,16);
+	  genreField = new LabeledComboBox("Genre ", new String[]{"Fantasy", "Horror", "Romance", "SciFi"});
 	  styleField = new LabeledTextField("Style ", 1,16);
 	  characterField = new LabeledTextField("Characters ", 10,30);
 	  worldBuilding = new LabeledTextField("World Building ", 10,30);
@@ -55,20 +55,6 @@ public class ControlPanel extends JPanel
     }
 
     /**
-     * Get the genre included in the text field.
-     * If none has been entered, return fantasy.
-     * @return
-     */
-    public String getGenre()
-    {
-	  if(!genreField.getText().isBlank())
-	  {
-		return genreField.getText();
-	  }
-	  return "Fantasy";
-    }
-
-    /**
      * Helper function to get the values out of each of the various components.
      * Mostly just for testing to make sure the correct values are there.
      * @return a string version of the fields.
@@ -78,7 +64,7 @@ public class ControlPanel extends JPanel
 	  StringBuilder values = new StringBuilder();
 	  values.append("Length: " + lengthField.getSelection());
 	  values.append("\nComplexity: " + complexityField.getSelection());
-	  values.append("\nGenre: " + genreField.getText());
+	  values.append("\nGenre: " + genreField.getSelection());
 	  values.append("\nStyle: " + styleField.getText());
 	  values.append("\nCharacters: " + characterField.getText());
 	  values.append("\nWorld Building: " + worldBuilding.getText());

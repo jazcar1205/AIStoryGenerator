@@ -18,14 +18,14 @@ public class SessionManager {
             json.put("story", session.getStory());
             json.put("prompt", session.getPrompt());
             json.put("strategyName", session.getStrategyName());
-
-            Files.writeString(Path.of(filename), json.toString(4));
+            Path filePath = Path.of("save_files/", filename);
+            System.out.println(filePath);
+            Files.writeString(filePath, json.toString(4));
             logger.info("Session saved to " + filename);
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to save session to " + filename, e);
         }
     }
-
     public Session loadSession(String filename) {
         try {
             String content = Files.readString(Path.of(filename));

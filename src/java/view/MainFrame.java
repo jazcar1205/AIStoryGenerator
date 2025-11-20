@@ -1,6 +1,7 @@
 package view;
 
 import model.StoryModel;
+import persistence.Session;
 import view.components.CustomButton;
 
 import javax.swing.*;
@@ -21,6 +22,7 @@ public class MainFrame extends JFrame
 
     private MainController controller;
     private StoryModel storyModel;
+    private Session session;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
@@ -32,6 +34,7 @@ public class MainFrame extends JFrame
 	  new MainFrame();
     }
     public MainFrame() {
+	  this.session = new Session();
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -61,7 +64,7 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
-	  fileOptionsPanel = new FileOptionsPanel("test");
+	  fileOptionsPanel = new FileOptionsPanel("untitled", session);
 	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);

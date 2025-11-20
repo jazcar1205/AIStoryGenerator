@@ -1,5 +1,7 @@
 package view;
 
+import persistence.Session;
+import persistence.SessionManager;
 import view.components.CustomButton;
 import view.components.LabeledTextField;
 import view.components.LoadDialog;
@@ -21,15 +23,19 @@ public class FileOptionsPanel extends JPanel
     private CustomButton addTags;
     private ArrayList<String> tags;
     private String fileName;
+    private SessionManager sessionManager;
+    private Session session;
 
     /**
      * Constructs a file options pane, requiring the name for the current file.
      * @param fileName
      */
-    public FileOptionsPanel(String fileName)
+    public FileOptionsPanel(String fileName, Session session)
     {
 	  this.fileName = fileName;
 	  this.tags = new ArrayList<>(); //need to set this to what is gotten from the file.
+	  sessionManager = new SessionManager();
+	  this.session = session;
 	  setBorder(BorderFactory.createTitledBorder("File Management"));
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  saveButton = new CustomButton("Save");
@@ -40,7 +46,9 @@ public class FileOptionsPanel extends JPanel
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
 		this.fileName = sd.getFileName();
+		System.out.println(this.fileName);
 		//need save actions from session.
+		sessionManager.saveSession(session, this.fileName);
 		sd.setVisible(true);
 	  });
 	  add(saveButton);
@@ -50,6 +58,7 @@ public class FileOptionsPanel extends JPanel
 		LoadDialog ld = new LoadDialog();
 		this.fileName = ld.getFileName();
 		//need load actions from session.
+		sessionManager.loadSession(this.fileName);
 		ld.setVisible(true);
 	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
