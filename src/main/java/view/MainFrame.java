@@ -64,7 +64,7 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
-	  fileOptionsPanel = new FileOptionsPanel(this, "untitled", session);
+	  fileOptionsPanel = new FileOptionsPanel(this, session);
 	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);

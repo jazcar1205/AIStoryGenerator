@@ -28,7 +28,6 @@ public class FileOptionsPanel extends JPanel
 
     /**
      * Constructs a file options pane, requiring the name for the current file.
-     * @param fileName
      */
     public FileOptionsPanel(MainFrame parent, Session session)
     {
