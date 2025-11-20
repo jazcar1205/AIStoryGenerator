@@ -1,7 +1,7 @@
 package view;
 
 import view.components.CustomButton;
-
+import controller.MainController;
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,8 +16,7 @@ public class MainFrame extends JFrame
     private CustomButton generateButton;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
-
-    private AIController controller;
+    private MainController controller;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.

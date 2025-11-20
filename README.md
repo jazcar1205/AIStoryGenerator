@@ -28,7 +28,7 @@ The Interactive Storytelling Application uses AI to create stories based on what
 1. Clone repository
 2. Copy `config.properties.example` to `config.properties`
 3. Add your OpenAI API key to `config.properties`
-4. Run `Main.java`
+4. Run `main.Main.java`
 
 ### Dependencies
 - org.json (version)
