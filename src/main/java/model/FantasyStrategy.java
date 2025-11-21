@@ -11,4 +11,10 @@ public class FantasyStrategy extends StoryStrategy {
         String fullPrompt = length + " " + complexity + " fantasy story: " + prompt;
         return service.generateText(fullPrompt, 0.7, 500);
     }
+
+    @Override
+    public StrategyType getStrategyType()
+    {
+        return StrategyType.FANTASY;
+    }
 }

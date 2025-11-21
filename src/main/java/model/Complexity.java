@@ -1,8 +1,12 @@
 package model;
+
+/**
+ * enum for complexity options.
+ */
 public enum Complexity {
     CHILDFRIENDLY("Child Friendly"),
     AVERAGE("Average"),
-    DIFFICULT("Complex");
+    COMPLEX("Complex");
 
     private final String complex;
 
@@ -10,7 +14,23 @@ public enum Complexity {
         this.complex = complex;
     }
 
-    public String getComplex() {
-        return complex;
+    public static Complexity getComplexity(String str)
+    {
+        String str1 = str.replaceAll("\\s","");
+        str1 = str1.toUpperCase();
+        return Complexity.valueOf(str1);
+    }
+    public String toString()
+    {
+        switch(this)
+        {
+            case CHILDFRIENDLY:
+                return "Child Friendly";
+            case AVERAGE:
+                return "Average";
+            case COMPLEX:
+                return "Complex";
+        }
+        return null;
     }
 }

@@ -1,27 +1,93 @@
 package persistence;
+import model.Complexity;
+import model.Length;
+import model.StoryStrategy;
+import model.StrategyType;
 
-
+/**
+ * Represents the current session.
+ */
 public class Session{
 
+    private String filePath;
     private String story;
-    private String prompt;
-    private String strategyName;
+    private Complexity complexity;
+    private Length length;
+    private StrategyType strategyType;
 
-    public Session() { }
+    /**
+     * Default constructor with filler text.
+     */
+    public Session() {
+        this.story = "Filler text.";
+        this.complexity = Complexity.CHILDFRIENDLY;
+        this.length = Length.SHORT;
+        this.strategyType = StrategyType.FANTASY;
+    }
 
-    public Session(String story, String prompt, String strategyName) {
+    /**
+     * Creates a session with the following options.
+     * @param complexity
+     * @param length
+     * @param storyStrategy
+     */
+    public Session(Complexity complexity, Length length, StrategyType storyStrategy)
+    {
+        this.story = "";
+        this.complexity = complexity;
+        this.length = length;
+        this.strategyType = storyStrategy;
+    }
+    public Session(String story, Complexity complexity, Length length, StrategyType storyStrategy)
+    {
         this.story = story;
-        this.prompt = prompt;
-        this.strategyName = strategyName;
+        this.complexity = complexity;
+        this.length = length;
+        this.strategyType = storyStrategy;
     }
 
     // Getters and setters
     public String getStory() { return story; }
     public void setStory(String story) { this.story = story; }
 
-    public String getPrompt() { return prompt; }
-    public void setPrompt(String prompt) { this.prompt = prompt; }
+    public Complexity getComplexity()
+    {
+        return complexity;
+    }
 
-    public String getStrategyName() { return strategyName; }
-    public void setStrategyName(String strategyName) { this.strategyName = strategyName; }
+    public void setComplexity(Complexity complexity)
+    {
+        this.complexity = complexity;
+    }
+
+    public Length getLength()
+    {
+        return length;
+    }
+
+    public void setLength(Length length)
+    {
+        this.length = length;
+    }
+
+    public StrategyType getStoryStrategy()
+    {
+        return strategyType;
+    }
+
+    public void setStoryStrategy(StrategyType strategyType)
+    {
+        this.strategyType = strategyType;
+    }
+
+    @Override
+    public String toString()
+    {
+        return "Session{" +
+                "story='" + story + '\'' +
+                ", complexity=" + complexity +
+                ", length=" + length +
+                ", strategyType=" + strategyType +
+                '}';
+    }
 }

@@ -14,4 +14,10 @@ public class RomanceStrategy extends StoryStrategy
         String fullPrompt = length + " " + complexity + " romance story: " + prompt;
         return service.generateText(fullPrompt, 0.7, 500);
     }
+
+    @Override
+    public StrategyType getStrategyType()
+    {
+        return StrategyType.ROMANCE;
+    }
 }

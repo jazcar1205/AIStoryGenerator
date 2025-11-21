@@ -1,10 +1,16 @@
 package view;
 
+import model.Complexity;
+import model.Length;
+import model.StoryModel;
+import model.StrategyType;
+import persistence.Session;
 import view.components.CustomButton;
-import controller.MainController;
+
 import javax.swing.*;
 import java.awt.*;
 
+import controller.MainController;
 /**
  * Creates the main frame of the program.
  */
@@ -16,12 +22,22 @@ public class MainFrame extends JFrame
     private CustomButton generateButton;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
+
     private MainController controller;
+    private StoryModel storyModel;
+    private Session session;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
      */
+    public MainFrame(StoryModel storyModel, MainController controller)
+    {
+	  this.controller = controller;
+	  this.storyModel = storyModel;
+	  new MainFrame();
+    }
     public MainFrame() {
+	  this.session = new Session();
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -51,11 +67,42 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
-	  fileOptionsPanel = new FileOptionsPanel("test");
+	  fileOptionsPanel = new FileOptionsPanel(this);
 	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    }
+
+    /**
+     * Sets the label for the file name.
+     * @param fileNameLabel
+     */
+    public void setFileNameLabel(String fileNameLabel)
+    {
+	  this.fileNameLabel.setText(fileNameLabel);
+    }
+
+    /**
+     * Sets the control panel options and updates the output area according
+     * to the session provided.
+     * @param session
+     */
+    public void setControlPanelOptions(Session session)
+    {
+	  controlPanel.setOptions(session.getLength(), session.getComplexity(), session.getStoryStrategy());
+	  outputArea.setText(session.getStory());
+    }
+
+    /**
+     * Get the updated session from the currently selected options.
+     * @return
+     */
+    public Session getUpdatedSession()
+    {
+	  this.session = controlPanel.getOptions();
+	  this.session.setStory(outputArea.getText());
+	  return session;
     }
 
     /**

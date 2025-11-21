@@ -1,5 +1,7 @@
 package view;
 
+import persistence.Session;
+import persistence.SessionManager;
 import view.components.CustomButton;
 import view.components.LabeledTextField;
 import view.components.LoadDialog;
@@ -20,16 +22,18 @@ public class FileOptionsPanel extends JPanel
     private LabeledTextField tagsLabel;
     private CustomButton addTags;
     private ArrayList<String> tags;
-    private String fileName;
+    private SessionManager sessionManager;
+    private MainFrame parent;
 
     /**
      * Constructs a file options pane, requiring the name for the current file.
-     * @param fileName
+     * @param parent the parent frame, the MainFrame
      */
-    public FileOptionsPanel(String fileName)
+    public FileOptionsPanel(MainFrame parent)
     {
-	  this.fileName = fileName;
+	  this.parent = parent;
 	  this.tags = new ArrayList<>(); //need to set this to what is gotten from the file.
+	  sessionManager = new SessionManager();
 	  setBorder(BorderFactory.createTitledBorder("File Management"));
 	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 	  saveButton = new CustomButton("Save");
@@ -39,18 +43,24 @@ public class FileOptionsPanel extends JPanel
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
-		this.fileName = sd.getFileName();
-		//need save actions from session.
 		sd.setVisible(true);
+		//System.out.println("File name" + this.fileName);
+		//need save actions from session.
+		sessionManager.saveSession(parent.getUpdatedSession(), sd.getFileName());
+		this.parent.setFileNameLabel(sd.getFileName());
+		sd.setVisible(false);
 	  });
 	  add(saveButton);
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(loadButton);
 	  loadButton.addActionListener(e -> {
 		LoadDialog ld = new LoadDialog();
-		this.fileName = ld.getFileName();
-		//need load actions from session.
 		ld.setVisible(true);
+		//need load actions from session.
+		Session newSession = sessionManager.loadSession(ld.getFileName());
+		//System.out.println(newSession);
+		this.parent.setFileNameLabel(ld.getFileName());
+		this.parent.setControlPanelOptions(newSession);
 	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(tagsLabel);
@@ -73,6 +83,10 @@ public class FileOptionsPanel extends JPanel
 	  }
     }
 
+    public String getFilePath()
+    {
+	  return sessionManager.getFilePath().toString();
+    }
     /**
      * Loads the tags into the
      * @return

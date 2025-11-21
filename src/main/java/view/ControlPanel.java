@@ -1,5 +1,9 @@
 package view;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
+import persistence.Session;
 import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
@@ -11,7 +15,7 @@ public class ControlPanel extends JPanel
 {
     private LabeledComboBox lengthField;
     private LabeledComboBox complexityField;
-    private LabeledTextField genreField;
+    private LabeledComboBox genreField;
     private LabeledTextField characterField;
     private LabeledTextField worldBuilding;
     private LabeledTextField styleField;
@@ -34,13 +38,35 @@ public class ControlPanel extends JPanel
     {
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
-		    new String[] {"Child-Friendly", "Average", "Complex"});
-	  genreField = new LabeledTextField("Genre ", 1,16);
+		    new String[] {"Child Friendly", "Average", "Complex"});
+	  genreField = new LabeledComboBox("Genre ", new String[]{"Fantasy", "Horror", "Romance", "SciFi"});
 	  styleField = new LabeledTextField("Style ", 1,16);
 	  characterField = new LabeledTextField("Characters ", 10,30);
 	  worldBuilding = new LabeledTextField("World Building ", 10,30);
     }
 
+    /**
+     * Sets the options in the control panel to the correct field.
+     * @param length
+     * @param complexity
+     * @param genre
+     */
+    public void setOptions(Length length, Complexity complexity, StrategyType genre)
+    {
+	  lengthField.setSelection(length.toString());
+	  complexityField.setSelection(complexity.toString());
+	  genreField.setSelection(genre.toString());
+    }
+
+    /**
+     * Creates a new session with the options currently selected.
+     * @return
+     */
+    public Session getOptions()
+    {
+	  return new Session(Complexity.getComplexity(complexityField.getSelection()), Length.getLength(lengthField.getSelection())
+		    , StrategyType.getStrat(genreField.getSelection()));
+    }
     /**
      * Add the components to the layout.
      */
@@ -55,20 +81,6 @@ public class ControlPanel extends JPanel
     }
 
     /**
-     * Get the genre included in the text field.
-     * If none has been entered, return fantasy.
-     * @return
-     */
-    public String getGenre()
-    {
-	  if(!genreField.getText().isBlank())
-	  {
-		return genreField.getText();
-	  }
-	  return "Fantasy";
-    }
-
-    /**
      * Helper function to get the values out of each of the various components.
      * Mostly just for testing to make sure the correct values are there.
      * @return a string version of the fields.
@@ -78,7 +90,7 @@ public class ControlPanel extends JPanel
 	  StringBuilder values = new StringBuilder();
 	  values.append("Length: " + lengthField.getSelection());
 	  values.append("\nComplexity: " + complexityField.getSelection());
-	  values.append("\nGenre: " + genreField.getText());
+	  values.append("\nGenre: " + genreField.getSelection());
 	  values.append("\nStyle: " + styleField.getText());
 	  values.append("\nCharacters: " + characterField.getText());
 	  values.append("\nWorld Building: " + worldBuilding.getText());
