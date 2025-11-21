@@ -1,6 +1,9 @@
 package view;
 
+import model.Complexity;
+import model.Length;
 import model.StoryModel;
+import model.StrategyType;
 import persistence.Session;
 import view.components.CustomButton;
 
@@ -64,7 +67,7 @@ public class MainFrame extends JFrame
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
 
-	  fileOptionsPanel = new FileOptionsPanel(this, session);
+	  fileOptionsPanel = new FileOptionsPanel(this);
 	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
 
 	  scrollPane = new JScrollPane(controlPanel);
@@ -74,6 +77,18 @@ public class MainFrame extends JFrame
     public void setFileNameLabel(String fileNameLabel)
     {
 	  this.fileNameLabel.setText(fileNameLabel);
+    }
+    public void setControlPanelOptions(Session session)
+    {
+	  controlPanel.setOptions(session.getLength(), session.getComplexity(), session.getStoryStrategy());
+	  outputArea.setText(session.getStory());
+    }
+
+    public Session getUpdatedSession()
+    {
+	  this.session = controlPanel.getOptions();
+	  this.session.setStory(outputArea.getText());
+	  return session;
     }
 
     /**

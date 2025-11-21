@@ -1,5 +1,9 @@
 package view;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
+import persistence.Session;
 import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
@@ -34,13 +38,31 @@ public class ControlPanel extends JPanel
     {
 	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
-		    new String[] {"Child-Friendly", "Average", "Complex"});
+		    new String[] {"Child Friendly", "Average", "Complex"});
 	  genreField = new LabeledComboBox("Genre ", new String[]{"Fantasy", "Horror", "Romance", "SciFi"});
 	  styleField = new LabeledTextField("Style ", 1,16);
 	  characterField = new LabeledTextField("Characters ", 10,30);
 	  worldBuilding = new LabeledTextField("World Building ", 10,30);
     }
 
+    /**
+     * Sets the options in the control panel to the correct field.
+     * @param length
+     * @param complexity
+     * @param genre
+     */
+    public void setOptions(Length length, Complexity complexity, StrategyType genre)
+    {
+	  lengthField.setSelection(length.toString());
+	  complexityField.setSelection(complexity.toString());
+	  genreField.setSelection(genre.toString());
+    }
+
+    public Session getOptions()
+    {
+	  return new Session(Complexity.getComplexity(complexityField.getSelection()), Length.getLength(lengthField.getSelection())
+		    , StrategyType.getStrat(genreField.getSelection()));
+    }
     /**
      * Add the components to the layout.
      */

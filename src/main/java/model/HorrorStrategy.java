@@ -13,4 +13,10 @@ public class HorrorStrategy extends StoryStrategy {
         String fullPrompt = length + " " + complexity + " horror story: " + prompt;
         return service.generateText(fullPrompt, 0.7, 500);
     }
+
+    @Override
+    public StrategyType getStrategyType()
+    {
+        return StrategyType.HORROR;
+    }
 }

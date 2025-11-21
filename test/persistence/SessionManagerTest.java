@@ -2,6 +2,8 @@ package persistence;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import persistence.Session;
+import persistence.SessionManager;
 
 import java.io.File;
 
@@ -26,5 +28,11 @@ class SessionManagerTest
 	  //asserting that the file exists.
 	  File file = new File("save_files/test");
 	  assertTrue(file.exists());
+    }
+
+    @Test
+    public void loadSessionTest()
+    {
+	  assertDoesNotThrow(()->{sm.loadSession("test");});
     }
 }

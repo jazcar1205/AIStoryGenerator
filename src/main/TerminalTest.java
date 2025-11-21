@@ -55,7 +55,7 @@ public class TerminalTest {
             switch (complexChoice) {
                 case "1" -> complexity = Complexity.CHILDFRIENDLY;
                 case "2" -> complexity = Complexity.AVERAGE;
-                case "3" -> complexity = Complexity.DIFFICULT;
+                case "3" -> complexity = Complexity.COMPLEX;
                 default -> { System.out.println("Invalid option, try again."); continue; }
             }
             break;
@@ -102,8 +102,8 @@ public class TerminalTest {
                 case "2" -> {
                     System.out.print("Enter filename to save: ");
                     String saveFile = scanner.nextLine().trim();
-                    Session session = new Session(model.getStory(), "", genre);
-                    sessionManager.saveSession(session, saveFile);
+                    //Session session = new Session(model.getStory(), "", genre);
+                    //sessionManager.saveSession(session, saveFile);
                     System.out.println("Session saved to " + saveFile);
                 }
                 case "3" -> {

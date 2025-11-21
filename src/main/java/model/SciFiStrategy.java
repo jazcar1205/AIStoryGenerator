@@ -12,4 +12,10 @@ public class SciFiStrategy extends StoryStrategy
         String fullPrompt = length + " " + complexity + " sci-fi story: " + prompt;
         return service.generateText(fullPrompt, 0.7, 500);
     }
+
+    @Override
+    public StrategyType getStrategyType()
+    {
+        return StrategyType.SCIFI;
+    }
 }

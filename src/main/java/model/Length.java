@@ -10,8 +10,23 @@ public enum Length {
     Length(String label) {
         this.label = label;
     }
-
-    public String getLabel() {
-        return label;
+    public static Length getLength(String str)
+    {
+        String str1 = str.replaceAll("\\s","");
+        str1 = str1.toUpperCase();
+        return Length.valueOf(str1);
+    }
+    public String toString()
+    {
+        switch(this)
+        {
+            case SHORT:
+                return "Short";
+            case MEDIUM:
+                return "Medium";
+            case LONG:
+                return "Long";
+        }
+        return null;
     }
 }

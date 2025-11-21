@@ -1,5 +1,8 @@
 package persistence;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -17,8 +20,9 @@ public class SessionManager {
         try {
             JSONObject json = new JSONObject();
             json.put("story", session.getStory());
-            json.put("prompt", session.getPrompt());
-            json.put("strategyName", session.getStrategyName());
+            json.put("complexity", session.getComplexity().toString());
+            json.put("length", session.getLength().toString());
+            json.put("strategy", session.getStoryStrategy().toString());
             //System.out.println(filePath);
             Files.writeString(filePath, json.toString(4));
             logger.info("Session saved to " + filePath);
@@ -29,15 +33,18 @@ public class SessionManager {
     public Session loadSession(String filename) {
         this.filePath = Path.of("save_files/", filename);
         try {
-            String content = Files.readString(Path.of(filename));
+            String content = Files.readString(this.filePath);
+            //System.out.println("Content: " + content);
             JSONObject json = new JSONObject(content);
 
             Session session = new Session();
             session.setStory(json.optString("story"));
-            session.setPrompt(json.optString("prompt"));
-            session.setStrategyName(json.optString("strategyName"));
+            session.setComplexity(json.optEnum(Complexity.class, "complexity"));
+            session.setLength(json.optEnum(Length.class, "length"));
+            session.setStoryStrategy(json.optEnum(StrategyType.class, "strategy"));
 
             logger.info("Session loaded from " + filePath);
+            System.out.println("Loaded session: " + session);
             return session;
         } catch (IOException e) {
             logger.log(Level.SEVERE, "Failed to load session from " + filePath, e);

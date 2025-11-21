@@ -10,4 +10,6 @@ public abstract class StoryStrategy {
     }
 
     public abstract String generateStory(String prompt, Length length, Complexity complexity) throws Exception;
+
+    public abstract StrategyType getStrategyType();
 }
