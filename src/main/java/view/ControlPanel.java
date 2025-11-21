@@ -58,6 +58,10 @@ public class ControlPanel extends JPanel
 	  genreField.setSelection(genre.toString());
     }
 
+    /**
+     * Creates a new session with the options currently selected.
+     * @return
+     */
     public Session getOptions()
     {
 	  return new Session(Complexity.getComplexity(complexityField.getSelection()), Length.getLength(lengthField.getSelection())

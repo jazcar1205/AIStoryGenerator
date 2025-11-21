@@ -1,4 +1,8 @@
 package model;
+
+/**
+ * enum for complexity options.
+ */
 public enum Complexity {
     CHILDFRIENDLY("Child Friendly"),
     AVERAGE("Average"),

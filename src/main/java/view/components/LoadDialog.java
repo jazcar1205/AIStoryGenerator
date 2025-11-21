@@ -42,6 +42,11 @@ public class LoadDialog extends JDialog
 	  setSize(200, 150);
     }
 
+    /**
+     * Grabs the file names from the save_files directory
+     * to list them in the drop down menu.
+     * @return
+     */
     private String[] getFileNames()
     {
 	  //Getting the potential save files from the folder.

@@ -74,16 +74,30 @@ public class MainFrame extends JFrame
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
     }
 
+    /**
+     * Sets the label for the file name.
+     * @param fileNameLabel
+     */
     public void setFileNameLabel(String fileNameLabel)
     {
 	  this.fileNameLabel.setText(fileNameLabel);
     }
+
+    /**
+     * Sets the control panel options and updates the output area according
+     * to the session provided.
+     * @param session
+     */
     public void setControlPanelOptions(Session session)
     {
 	  controlPanel.setOptions(session.getLength(), session.getComplexity(), session.getStoryStrategy());
 	  outputArea.setText(session.getStory());
     }
 
+    /**
+     * Get the updated session from the currently selected options.
+     * @return
+     */
     public Session getUpdatedSession()
     {
 	  this.session = controlPanel.getOptions();

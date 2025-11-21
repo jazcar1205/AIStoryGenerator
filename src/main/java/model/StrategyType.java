@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Provides options for the genre/strategy.
+ */
 public enum StrategyType
 {
     FANTASY("Fantasy"),

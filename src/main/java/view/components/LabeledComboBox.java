@@ -37,6 +37,10 @@ public class LabeledComboBox extends JPanel
 	  add(comboBox);
     }
 
+    /**
+     * Sets the selection for the combo box.
+     * @param selection
+     */
     public void setSelection(String selection)
     {
 	  this.selection = selection;

@@ -11,10 +11,19 @@ import java.nio.file.Path;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * Manages saving and loading sessions.
+ */
 public class SessionManager {
 
     private static final Logger logger = Logger.getLogger(SessionManager.class.getName());
     private Path filePath;
+
+    /**
+     * Helps to save the session as a JSON object according to the filepath.
+     * @param session
+     * @param filename
+     */
     public void saveSession(Session session, String filename) {
         this.filePath = Path.of("save_files/", filename);
         try {
@@ -30,6 +39,12 @@ public class SessionManager {
             logger.log(Level.SEVERE, "Failed to save session to " + filePath.toString(), e);
         }
     }
+
+    /**
+     * Helps to load the session into a session object from a JSON file.
+     * @param filename
+     * @return
+     */
     public Session loadSession(String filename) {
         this.filePath = Path.of("save_files/", filename);
         try {

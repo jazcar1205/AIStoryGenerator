@@ -4,6 +4,9 @@ import model.Length;
 import model.StoryStrategy;
 import model.StrategyType;
 
+/**
+ * Represents the current session.
+ */
 public class Session{
 
     private String filePath;
@@ -12,6 +15,9 @@ public class Session{
     private Length length;
     private StrategyType strategyType;
 
+    /**
+     * Default constructor with filler text.
+     */
     public Session() {
         this.story = "Filler text.";
         this.complexity = Complexity.CHILDFRIENDLY;
@@ -19,6 +25,12 @@ public class Session{
         this.strategyType = StrategyType.FANTASY;
     }
 
+    /**
+     * Creates a session with the following options.
+     * @param complexity
+     * @param length
+     * @param storyStrategy
+     */
     public Session(Complexity complexity, Length length, StrategyType storyStrategy)
     {
         this.story = "";

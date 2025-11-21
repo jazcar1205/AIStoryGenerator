@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * Provides the options for the length.
+ */
 public enum Length {
     SHORT("Short"),
     MEDIUM("Medium"),
