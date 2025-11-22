@@ -29,9 +29,9 @@ public class SessionManager {
         try {
             JSONObject json = new JSONObject();
             json.put("story", session.getStory());
-            json.put("complexity", session.getComplexity().toString());
-            json.put("length", session.getLength().toString());
-            json.put("strategy", session.getStoryStrategy().toString());
+            json.put("complexity", session.getComplexity());
+            json.put("length", session.getLength());
+            json.put("strategy", session.getStoryStrategy());
             //System.out.println(filePath);
             Files.writeString(filePath, json.toString(4));
             logger.info("Session saved to " + filePath);
