@@ -1,5 +1,3 @@
-package main;
-
 import controller.MainController;
 import model.*;
 import persistence.Session;
