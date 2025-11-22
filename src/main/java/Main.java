@@ -1,5 +1,3 @@
-package main;
-
 import controller.MainController;
 import model.StoryModel;
 import model.FantasyStrategy;
