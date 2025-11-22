@@ -3,28 +3,27 @@
 ## Design Decisions
 
 ### Architecture Overview
-Explain your MVC structure and design pattern choices.
+We used an MVC structure to keep the model, UI, and controller logic separate and clean. Design patterns like Strategy, Factory, Observer, and Singleton helped make the system flexible and easy to maintain.
 
 ### API Integration Strategy
-How you handle async calls, errors, rate limits.
+All API calls run asynchronously so the UI never freezes, and we handle errors and rate limits using retries and centralized error handling.
 
 ### Design Pattern Justifications
-Why did you choose specific patterns for specific problems?
+Strategy and Factory allow easy switching between story genres, Observer keeps the UI updated automatically, and Singleton ensures only one API service instance manages all requests.
 
 ## Challenges Faced
 
 ### Challenge 1: API Rate Limiting
-**Problem:** ...
-**Solution:** ...
+**Problem:** We hit rate limits during testing.
+**Solution:** We added retry logic and controlled request timing.
 **Learning:** ...
 
 ### Challenge 2: Error Handling
-**Problem:** ...
-**Solution:** ...
+**Problem:** Unexpected API failures caused crashes.
+**Solution:** we built a unified error handler to manage and display errors safely.
 
 ### Challenge 3: [Your challenge]
-**Problem:** ...
-**Solution:** ...
+We struggled with genre switching at first, but refactoring to Strategy made it simple and consistent.
 
 ## Testing Strategy
 Describe your testing approach and coverage.
@@ -32,7 +31,7 @@ Describe your testing approach and coverage.
 ## AI/LLM Usage Disclosure
 **Did you use AI tools (ChatGPT, Copilot, etc.)?**
 - [ ] Yes - Describe how and what
-- [ ] No
+- [x] No
 
 If yes, explain:
 - What AI tools you used
@@ -41,16 +40,14 @@ If yes, explain:
 - What you learned from the process
 
 ## Time Breakdown
-- Design & Planning: X hours
-- Implementation: X hours
-- Testing: X hours
-- Documentation: X hours
-- Total: X hours
+- Design & Planning: 2 hours
+- Implementation: 20 hours
+- Testing: 1 hours
+- Documentation: 2 hours
+- Total: 23 hours Currently 
 
 ## What We Learned
 - OOP concept reinforced
 - API integration insights
 - Design pattern understanding
 
-## If We Had More Time
-Features/improvements we'd add.
