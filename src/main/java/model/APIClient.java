@@ -36,7 +36,7 @@ public class APIClient {
         messages.put(message);
 
         JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-3.5-turbo"); // or gpt-4
+        requestBody.put("model", "gpt-3.5-turbo");
         requestBody.put("messages", messages);
         requestBody.put("temperature", 0.7);
         requestBody.put("max_tokens", 500);

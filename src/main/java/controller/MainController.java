@@ -31,6 +31,7 @@ public class MainController {
      */
     public void generateStory(String prompt) {
         if (prompt == null || prompt.isEmpty()) {
+            // NOTE: Even this uses JOptionPane. You should change this too if you want a pure CLI.
             JOptionPane.showMessageDialog(null, "Please enter a prompt to generate a story.");
             return;
         }
@@ -48,20 +49,18 @@ public class MainController {
                     client.generateStoryAsync(
                             prompt,
                             generatedStory -> SwingUtilities.invokeLater(() -> model.setStory(generatedStory)),
-                            error -> SwingUtilities.invokeLater(() ->
-                                    JOptionPane.showMessageDialog(null, APIErrorHandler.handleError(error))
-                            )
+                            // FIX 1: Replace GUI error handler with System.err.println
+                            error -> System.err.println("API Client Fallback Error: " + APIErrorHandler.handleError(error))
                     );
-                    return; // Exit since APIClient handles callback asynchronously
+                    return;
                 }
 
                 // Update model on EDT
                 SwingUtilities.invokeLater(() -> model.setStory(story));
 
             } catch (Exception e) {
-                SwingUtilities.invokeLater(() ->
-                        JOptionPane.showMessageDialog(null, APIErrorHandler.handleError(e))
-                );
+                // FIX 2: Replace GUI error handler with System.err.println
+                System.err.println("Strategy Execution Error: " + APIErrorHandler.handleError(e));
             }
         });
     }

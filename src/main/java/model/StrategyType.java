@@ -8,7 +8,8 @@ public enum StrategyType
     FANTASY("Fantasy"),
     HORROR("Horror"),
     ROMANCE("Romance"),
-    SCIFI("SciFi");
+    SCIFI("SciFi"),
+    GENERIC("Generic");
 
     private final String strat;
 

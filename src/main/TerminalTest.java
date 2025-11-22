@@ -26,6 +26,8 @@ public class TerminalTest {
         String apiKey = scanner.nextLine().trim();
         OpenAIService service = new OpenAIService(apiKey);
 
+
+
         MainController controller = new MainController(model);
 
         Length length = Length.MEDIUM;
@@ -46,6 +48,9 @@ public class TerminalTest {
             }
             break;
         }
+
+        StoryStrategy selectedStrategy = StoryStrategyFactory.getStrategy(genre, service);
+        controller.setStrategy(selectedStrategy);
 
         // --- Complexity selection ---
         while (true) {
@@ -84,6 +89,7 @@ public class TerminalTest {
         System.out.println("Length: " + length);
 
         SessionManager sessionManager = new SessionManager();
+
 
         while (true) {
             System.out.println("Options: [1] Generate story  [2] Save session  [3] Load session  [0] Exit");
