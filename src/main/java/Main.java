@@ -1,6 +1,7 @@
 import controller.MainController;
 import model.StoryModel;
 import model.FantasyStrategy;
+import persistence.ConfigLoader;
 import service.OpenAIService;
 import view.MainFrame;
 
@@ -14,21 +15,13 @@ public class Main {
         // Initialize model
         StoryModel model = new StoryModel();
 
-        Properties prop = new Properties();
-        String fileName = "src/resources/config.properties";
-        try (FileInputStream fis = new FileInputStream(fileName)) {
-            prop.load(fis);
-        } catch (FileNotFoundException ex) {
-            System.out.println("File not found: " + fileName);
-        } catch (IOException ex) {
-            System.out.println(ex.getMessage());
-        }
-        OpenAIService service = new OpenAIService(prop.getProperty("OPENAI_API_KEY"));
+        //getting the api key from properties.
 
+
+
+        OpenAIService service = new OpenAIService(ConfigLoader.getKey("OPENAI_API_KEY"));
         MainController controller = new MainController(model, service);
-
         controller.setStrategy(new FantasyStrategy(service));
-
         new MainFrame(model, controller);
     }
 }
