@@ -4,21 +4,28 @@ import model.FantasyStrategy;
 import service.OpenAIService;
 import view.MainFrame;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
+
 public class Main {
     public static void main(String[] args) {
         // Initialize model
         StoryModel model = new StoryModel();
 
-        String apiKey = System.getenv("OPENAI_API_KEY");
-        if (apiKey == null || apiKey.isEmpty()) {
-            System.err.println("FATAL ERROR: OPENAI_API_KEY environment variable not set.");
-            // handle with a dialog box in app
-            System.exit(1);
+        Properties prop = new Properties();
+        String fileName = "src/resources/config.properties";
+        try (FileInputStream fis = new FileInputStream(fileName)) {
+            prop.load(fis);
+        } catch (FileNotFoundException ex) {
+            System.out.println("File not found: " + fileName);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
         }
+        OpenAIService service = new OpenAIService(prop.getProperty("OPENAI_API_KEY"));
 
-        OpenAIService service = new OpenAIService(System.getenv("OPENAI_API_KEY"));
-
-        MainController controller = new MainController(model);
+        MainController controller = new MainController(model, service);
 
         controller.setStrategy(new FantasyStrategy(service));
 

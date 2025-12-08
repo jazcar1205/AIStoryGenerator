@@ -102,6 +102,7 @@ public class MainFrame extends JFrame
     {
 	  this.session = controlPanel.getOptions();
 	  this.session.setStory(outputArea.getText());
+	  this.storyModel = session.getAsModel();
 	  return session;
     }
 

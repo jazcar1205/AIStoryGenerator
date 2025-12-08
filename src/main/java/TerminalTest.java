@@ -24,13 +24,11 @@ public class TerminalTest {
         String apiKey = scanner.nextLine().trim();
         OpenAIService service = new OpenAIService(apiKey);
 
-
-
-        MainController controller = new MainController(model);
+        MainController controller = new MainController(model,service);
 
         Length length = Length.MEDIUM;
         Complexity complexity = Complexity.AVERAGE;
-        String genre = "Fantasy";
+        StrategyType genre = StrategyType.FANTASY;
 
         // --- Genre selection ---
         while (true) {
@@ -38,10 +36,10 @@ public class TerminalTest {
             System.out.print("Choice: ");
             String genreChoice = scanner.nextLine().trim();
             switch (genreChoice) {
-                case "1" -> genre = "Fantasy";
-                case "2" -> genre = "Romance";
-                case "3" -> genre = "SciFi";
-                case "4" -> genre = "Horror";
+                case "1" -> genre = StrategyType.FANTASY;
+                case "2" -> genre = StrategyType.ROMANCE;
+                case "3" -> genre = StrategyType.SCIFI;
+                case "4" -> genre = StrategyType.HORROR;
                 default -> { System.out.println("Invalid option, try again."); continue; }
             }
             break;

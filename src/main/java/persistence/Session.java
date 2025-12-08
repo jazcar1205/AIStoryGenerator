@@ -1,8 +1,5 @@
 package persistence;
-import model.Complexity;
-import model.Length;
-import model.StoryStrategy;
-import model.StrategyType;
+import model.*;
 
 /**
  * Represents the current session.
@@ -78,6 +75,11 @@ public class Session{
     public void setStoryStrategy(StrategyType strategyType)
     {
         this.strategyType = strategyType;
+    }
+
+    public StoryModel getAsModel()
+    {
+        return new StoryModel(this.story, this.length, this.complexity, this.strategyType);
     }
 
     @Override

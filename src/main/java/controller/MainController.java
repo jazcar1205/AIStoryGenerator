@@ -1,11 +1,15 @@
 package controller;
 
-import model.APIClient;
-import model.StoryModel;
-import model.StoryStrategy;
+import model.*;
+import persistence.Session;
 import service.APIErrorHandler;
+import service.OpenAIService;
 
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,16 +17,27 @@ public class MainController {
 
     private final StoryModel model;
     private StoryStrategy strategy;
+    private OpenAIService service;
     private final ExecutorService executor;
 
-    public MainController(StoryModel model) {
+    public MainController(StoryModel model, OpenAIService service) {
         this.model = model;
+        this.service = service;
         this.executor = Executors.newSingleThreadExecutor(); // Single-threaded executor
     }
 
-    public void setStrategy(StoryStrategy strategy) {
+    public void setStrategy(StoryStrategy strategy)
+    {
+        this.model.setStrategy(strategy.getStrategyType());
         this.strategy = strategy;
     }
+
+    public void setStrategy(StrategyType strategy)
+    {
+        this.model.setStrategy(strategy);
+        this.strategy = StoryStrategyFactory.getStrategy(strategy, service);
+    }
+
 
     /**
      * Generates a story asynchronously using the selected strategy or fallback client.
