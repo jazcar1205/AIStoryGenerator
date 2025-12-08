@@ -3,12 +3,12 @@ package model;
 import service.OpenAIService;
 
 public class StoryStrategyFactory {
-    public static StoryStrategy getStrategy(String genre, OpenAIService service) {
+    public static StoryStrategy getStrategy(StrategyType genre, OpenAIService service) {
         return switch (genre) {
-            case "Fantasy" -> new FantasyStrategy(service);
-            case "Romance" -> new RomanceStrategy(service);
-            case "SciFi" -> new SciFiStrategy(service);
-            case "Horror" -> new HorrorStrategy(service);
+            case StrategyType.FANTASY -> new FantasyStrategy(service);
+            case StrategyType.ROMANCE -> new RomanceStrategy(service);
+            case StrategyType.SCIFI -> new SciFiStrategy(service);
+            case StrategyType.HORROR -> new HorrorStrategy(service);
             default -> new GenericStrategy(service);
         };
     }

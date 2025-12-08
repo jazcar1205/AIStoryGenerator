@@ -2,6 +2,7 @@ package service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.ConfigLoader;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
 public class OpenAIService {
     private final String API_KEY;
     private final String MODEL = "gpt-3.5-turbo";
-    private final String API_URL = "https://api.openai.com/v1/chat/completions";
+    private final String API_URL = ConfigLoader.getKey("API_URL");
     private final HttpClient client;
 
     public OpenAIService(String apiKey) {

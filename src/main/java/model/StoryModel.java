@@ -7,12 +7,22 @@ public class StoryModel {
     private String story;
     private Length len;
     private Complexity complex;
+    private StrategyType strategy;
     private final List<Observer> observers = new ArrayList<>();
 
     public StoryModel() {
         this.story = "";
         this.len = Length.MEDIUM;
         this.complex = Complexity.AVERAGE;
+        this.strategy = StrategyType.FANTASY;
+    }
+
+    public StoryModel(String story, Length len, Complexity complex, StrategyType strategy)
+    {
+        this.story = story;
+        this.len = len;
+        this.complex = complex;
+        this.strategy = strategy;
     }
 
     public void setStory(String story) {
@@ -30,6 +40,15 @@ public class StoryModel {
         notifyObservers();
     }
 
+    public void setStrategy(StrategyType strategy)
+    {
+        this.strategy = strategy;
+    }
+
+    public StrategyType getStrategy()
+    {
+        return strategy;
+    }
     public String getStory() {
         return story;
     }

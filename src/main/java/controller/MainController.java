@@ -1,11 +1,15 @@
 package controller;
 
-import model.APIClient;
-import model.StoryModel;
-import model.StoryStrategy;
+import model.*;
+import persistence.Session;
 import service.APIErrorHandler;
+import service.OpenAIService;
 
 import javax.swing.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -13,15 +17,26 @@ public class MainController {
 
     private final StoryModel model;
     private StoryStrategy strategy;
+    private OpenAIService service;
     private final ExecutorService executor;
 
-    public MainController(StoryModel model) {
+    public MainController(StoryModel model, OpenAIService service) {
         this.model = model;
+        setStrategy(model.getStrategy());
+        this.service = service;
         this.executor = Executors.newSingleThreadExecutor(); // Single-threaded executor
     }
 
-    public void setStrategy(StoryStrategy strategy) {
+    public void setStrategy(StoryStrategy strategy)
+    {
+        this.model.setStrategy(strategy.getStrategyType());
         this.strategy = strategy;
+    }
+
+    public void setStrategy(StrategyType strategy)
+    {
+        this.model.setStrategy(strategy);
+        this.strategy = StoryStrategyFactory.getStrategy(strategy, service);
     }
 
     /**
@@ -43,6 +58,7 @@ public class MainController {
                 if (strategy != null) {
                     // Pass Length and Complexity to strategy if needed
                     story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
+                    System.out.println("Expected story: " + story);
                 } else {
                     // Fallback to APIClient (async)
                     APIClient client = APIClient.getInstance();
@@ -54,9 +70,9 @@ public class MainController {
                     );
                     return;
                 }
-
+                model.setStory(story);
                 // Update model on EDT
-                SwingUtilities.invokeLater(() -> model.setStory(story));
+               // SwingUtilities.invokeLater(() -> model.setStory(story));
 
             } catch (Exception e) {
                 // FIX 2: Replace GUI error handler with System.err.println

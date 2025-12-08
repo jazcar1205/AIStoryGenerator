@@ -3,6 +3,7 @@ package model;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import persistence.ConfigLoader;
 
 import java.io.IOException;
 
@@ -11,13 +12,13 @@ import java.io.IOException;
  */
 public class APIClient {
     private static APIClient instance = null;
-    private static final String API_URL = "https://api.openai.com/v1/chat/completions";
+    private static final String API_URL = ConfigLoader.getKey("API_URL");
     private final OkHttpClient client;
     private final String apiKey;
 
     private APIClient() {
         client = new OkHttpClient();
-        apiKey = System.getenv("OPENAI_API_KEY");
+        apiKey = ConfigLoader.getKey("OPENAI_API_KEY");
     }
 
     public static synchronized APIClient getInstance() {
