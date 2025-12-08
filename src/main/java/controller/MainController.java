@@ -22,6 +22,7 @@ public class MainController {
 
     public MainController(StoryModel model, OpenAIService service) {
         this.model = model;
+        setStrategy(model.getStrategy());
         this.service = service;
         this.executor = Executors.newSingleThreadExecutor(); // Single-threaded executor
     }
@@ -37,7 +38,6 @@ public class MainController {
         this.model.setStrategy(strategy);
         this.strategy = StoryStrategyFactory.getStrategy(strategy, service);
     }
-
 
     /**
      * Generates a story asynchronously using the selected strategy or fallback client.
@@ -58,6 +58,7 @@ public class MainController {
                 if (strategy != null) {
                     // Pass Length and Complexity to strategy if needed
                     story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
+                    System.out.println("Expected story: " + story);
                 } else {
                     // Fallback to APIClient (async)
                     APIClient client = APIClient.getInstance();
@@ -69,9 +70,9 @@ public class MainController {
                     );
                     return;
                 }
-
+                model.setStory(story);
                 // Update model on EDT
-                SwingUtilities.invokeLater(() -> model.setStory(story));
+               // SwingUtilities.invokeLater(() -> model.setStory(story));
 
             } catch (Exception e) {
                 // FIX 2: Replace GUI error handler with System.err.println
