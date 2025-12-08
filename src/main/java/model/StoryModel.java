@@ -14,6 +14,7 @@ public class StoryModel {
         this.story = "";
         this.len = Length.MEDIUM;
         this.complex = Complexity.AVERAGE;
+        this.strategy = StrategyType.FANTASY;
     }
 
     public StoryModel(String story, Length len, Complexity complex, StrategyType strategy)

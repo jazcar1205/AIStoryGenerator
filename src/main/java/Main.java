@@ -14,11 +14,6 @@ public class Main {
     public static void main(String[] args) {
         // Initialize model
         StoryModel model = new StoryModel();
-
-        //getting the api key from properties.
-
-
-
         OpenAIService service = new OpenAIService(ConfigLoader.getKey("OPENAI_API_KEY"));
         MainController controller = new MainController(model, service);
         controller.setStrategy(new FantasyStrategy(service));
