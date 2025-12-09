@@ -2,12 +2,9 @@ package persistence;
 
 import model.Complexity;
 import model.Length;
-import model.StoryStrategy;
 import model.StrategyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import persistence.Session;
-import persistence.SessionManager;
 
 import java.io.File;
 import java.nio.file.Path;

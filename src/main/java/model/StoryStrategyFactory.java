@@ -1,5 +1,6 @@
 package model;
 
+import model.strategies.*;
 import service.OpenAIService;
 
 public class StoryStrategyFactory {

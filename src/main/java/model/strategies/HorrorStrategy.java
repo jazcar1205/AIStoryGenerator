@@ -1,8 +1,12 @@
-package model;
+package model.strategies;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
 import service.OpenAIService;
 
-public class HorrorStrategy extends StoryStrategy {
+public class HorrorStrategy extends StoryStrategy
+{
 
     public HorrorStrategy(OpenAIService service) {
         super(service);

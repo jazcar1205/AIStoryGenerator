@@ -6,12 +6,15 @@ import view.components.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 import controller.MainController;
+
 /**
  * Creates the main frame of the program.
  */
-public class MainFrame extends JFrame
+public class MainFrame extends JFrame implements Observer
 {
     private JLabel fileNameLabel;
     private JScrollPane scrollPane;
@@ -21,15 +24,14 @@ public class MainFrame extends JFrame
     private FileOptionsPanel fileOptionsPanel;
 
     private MainController controller;
-    private StoryModel storyModel;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
      */
-    public MainFrame(StoryModel storyModel, MainController controller)
+    public MainFrame(MainController controller)
     {
 	  this.controller = controller;
-	  this.storyModel = storyModel;
+	  this.controller.attachObserver(this);
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -40,7 +42,8 @@ public class MainFrame extends JFrame
 	  setVisible(true);
     }
 
-    public MainFrame() {
+    public MainFrame()
+    {
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -54,7 +57,8 @@ public class MainFrame extends JFrame
     /**
      * Initializes all components in the frame.
      */
-    private void initComponents() {
+    private void initComponents()
+    {
 	  fileNameLabel = new JLabel("Untitled.txt");
 	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -68,10 +72,10 @@ public class MainFrame extends JFrame
 	  generateButton.addActionListener(e -> onGenerate());
 
 	  controlPanel = new ControlPanel();
-	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
+	  controlPanel.setSize((int) (getWidth() - (getWidth() * 0.40)), getHeight() - 50);
 
 	  fileOptionsPanel = new FileOptionsPanel(this);
-	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
+	  fileOptionsPanel.setSize((int) (getWidth() - (getWidth() * 0.2)), getHeight() - 50);
 
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -79,6 +83,7 @@ public class MainFrame extends JFrame
 
     /**
      * Sets the label for the file name.
+     *
      * @param fileNameLabel
      */
     public void setFileNameLabel(String fileNameLabel)
@@ -89,6 +94,7 @@ public class MainFrame extends JFrame
     /**
      * Sets the control panel options and updates the output area according
      * to the session provided.
+     *
      * @param session
      */
     public void setControlPanelOptions(Session session)
@@ -99,12 +105,13 @@ public class MainFrame extends JFrame
 
     /**
      * Get the updated session from the currently selected options.
+     *
      * @return
      */
     public Session getUpdatedSession()
     {
 	  updateModel();
-	  return this.storyModel.getAsSession();
+	  return this.controller.getSession();
     }
 
     /**
@@ -112,9 +119,7 @@ public class MainFrame extends JFrame
      */
     public void updateModel()
     {
-	  this.storyModel = controlPanel.getOptions();
-	  this.storyModel.setStory(outputArea.getText());
-	  this.controller.updateModel(storyModel);
+	  this.controller.updateModel(controlPanel.getOptions());
     }
 
     /**
@@ -130,38 +135,48 @@ public class MainFrame extends JFrame
 	  pack();
     }
 
+    @Override
+    public void update(Observable o, Object arg)
+    {
+	  outputArea.setText(controller.getStory());
+    }
+
     /**
      * Used to send info to the API to generate text.
      */
-    private void onGenerate() {
+    private void onGenerate()
+    {
 	  generateButton.setEnabled(false);
-	  //updating model
-	  updateModel();
 	  generateButton.setText("Generating...");
-
-	  // Run API call in background thread
-	  new SwingWorker<String, Void>() {
+	  updateModel();
+	 new SwingWorker<String, Void>()
+	  {
 		//Creates a new thread that will run in background while GUI is still responsive.
 		@Override
-		protected String doInBackground() throws Exception {
+		protected String doInBackground() throws Exception
+		{
 		    return controller.generateStory("coworkers");
 		}
 
 		//When the background thread is done, the GUI will be updated.
 		@Override
-		protected void done() {
-		    try {
+		protected void done()
+		{
+		    try
+		    {
 			  outputArea.setText(get());
 			  //model also updated accordingly both here and in controller.
 			  updateModel();
-		    } catch (Exception e) {
+		    } catch (Exception e)
+		    {
 			  JOptionPane.showMessageDialog(
 				    MainFrame.this,
 				    "Error: " + e.getMessage(),
 				    "API Error",
 				    JOptionPane.ERROR_MESSAGE
 								 );
-		    } finally {
+		    } finally
+		    {
 			  //Let you use the generate button again now.
 			  generateButton.setEnabled(true);
 			  generateButton.setText("Generate");
@@ -172,9 +187,11 @@ public class MainFrame extends JFrame
 
     /**
      * Run that app!
+     *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 	  SwingUtilities.invokeLater(MainFrame::new);
     }
 }

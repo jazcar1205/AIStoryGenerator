@@ -1,5 +1,8 @@
-package model;
+package model.strategies;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
 import service.OpenAIService;
 
 public class SciFiStrategy extends StoryStrategy
