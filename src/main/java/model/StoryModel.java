@@ -1,5 +1,7 @@
 package model;
 
+import persistence.Session;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +19,13 @@ public class StoryModel {
         this.strategy = StrategyType.FANTASY;
     }
 
+    public StoryModel(Length len, Complexity complex, StrategyType strategy)
+    {
+        this.story = "";
+        this.len = len;
+        this.complex = complex;
+        this.strategy = strategy;
+    }
     public StoryModel(String story, Length len, Complexity complex, StrategyType strategy)
     {
         this.story = story;
@@ -55,6 +64,11 @@ public class StoryModel {
     public Length getLength() { return len; }
     public Complexity getComplexity() { return complex; }
 
+    public Session getAsSession()
+    {
+        return new Session(story, complex, len, strategy);
+    }
+
     public void attach(Observer o) {
         observers.add(o);
     }
@@ -70,4 +84,17 @@ public class StoryModel {
     public interface Observer {
         void update(String story, Length len, Complexity complex);
     }
+
+    @Override
+    public String toString()
+    {
+        return "StoryModel{" +
+                "story='" + story + '\'' +
+                ", len=" + len +
+                ", complex=" + complex +
+                ", strategy=" + strategy +
+                ", observers=" + observers +
+                '}';
+    }
+
 }

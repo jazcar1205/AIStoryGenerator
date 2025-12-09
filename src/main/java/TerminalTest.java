@@ -1,5 +1,6 @@
 import controller.MainController;
 import model.*;
+import persistence.ConfigLoader;
 import persistence.Session;
 import persistence.SessionManager;
 import service.OpenAIService;
@@ -19,10 +20,7 @@ public class TerminalTest {
                         + "\nComplexity: " + complexity + "\n")
         );
 
-
-        System.out.print("Enter your OpenAI API key: ");
-        String apiKey = scanner.nextLine().trim();
-        OpenAIService service = new OpenAIService(apiKey);
+        OpenAIService service = new OpenAIService(ConfigLoader.getKey("OPENAI_API_KEY"));
 
         MainController controller = new MainController(model,service);
 

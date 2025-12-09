@@ -2,8 +2,8 @@ package view;
 
 import model.Complexity;
 import model.Length;
+import model.StoryModel;
 import model.StrategyType;
-import persistence.Session;
 import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
@@ -62,10 +62,10 @@ public class ControlPanel extends JPanel
      * Creates a new session with the options currently selected.
      * @return
      */
-    public Session getOptions()
+    public StoryModel getOptions()
     {
-	  return new Session(Complexity.getComplexity(complexityField.getSelection()), Length.getLength(lengthField.getSelection())
-		    , StrategyType.getStrat(genreField.getSelection()));
+	  return new StoryModel(Length.getLength(lengthField.getSelection()),
+		    Complexity.getComplexity(complexityField.getSelection()), StrategyType.getStrat(genreField.getSelection()));
     }
     /**
      * Add the components to the layout.

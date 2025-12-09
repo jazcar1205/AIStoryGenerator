@@ -6,16 +6,14 @@ import service.APIErrorHandler;
 import service.OpenAIService;
 
 import javax.swing.*;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class MainController {
 
-    private final StoryModel model;
+    private StoryModel model;
     private StoryStrategy strategy;
     private OpenAIService service;
     private final ExecutorService executor;
@@ -39,46 +37,62 @@ public class MainController {
         this.strategy = StoryStrategyFactory.getStrategy(strategy, service);
     }
 
+    public String generateStoryDummy()
+    {
+        return model.toString();
+    }
+
+    public void updateModel(StoryModel model)
+    {
+        this.model = model;
+    }
+
+    public String getStory()
+    {
+        return model.getStory();
+    }
+
     /**
-     * Generates a story asynchronously using the selected strategy or fallback client.
+     * Generates a story using the selected strategy.
      *
      * @param prompt The story prompt
      */
-    public void generateStory(String prompt) {
+    public String generateStory(String prompt) {
         if (prompt == null || prompt.isEmpty()) {
             // NOTE: Even this uses JOptionPane. You should change this too if you want a pure CLI.
             JOptionPane.showMessageDialog(null, "Please enter a prompt to generate a story.");
-            return;
+            return "";
         }
 
-        executor.submit(() -> {
+        //executors use "Futures" aka a promised response to an execution.
+        Future<String> storyFuture = executor.submit(() -> {
             try {
-                String story;
-
                 if (strategy != null) {
-                    // Pass Length and Complexity to strategy if needed
-                    story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
-                    System.out.println("Expected story: " + story);
-                } else {
-                    // Fallback to APIClient (async)
-                    APIClient client = APIClient.getInstance();
-                    client.generateStoryAsync(
-                            prompt,
-                            generatedStory -> SwingUtilities.invokeLater(() -> model.setStory(generatedStory)),
-                            // FIX 1: Replace GUI error handler with System.err.println
-                            error -> System.err.println("API Client Fallback Error: " + APIErrorHandler.handleError(error))
-                    );
-                    return;
+                    // Synchronous generation.
+                    String story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
+                    SwingUtilities.invokeLater(() -> model.setStory(story));
+                    return story;
+                }else
+                {
+                    System.out.println("No strategy selected?");
+                    return null;
                 }
-                model.setStory(story);
-                // Update model on EDT
-               // SwingUtilities.invokeLater(() -> model.setStory(story));
-
             } catch (Exception e) {
                 // FIX 2: Replace GUI error handler with System.err.println
                 System.err.println("Strategy Execution Error: " + APIErrorHandler.handleError(e));
+                return null;
             }
         });
+
+        //After generation is complete, we need to get the "Future".
+        try {
+            String storyResult = storyFuture.get(); // Will block thread from moving on until this is completed.
+            System.out.println("Story successfully generated and retrieved from Future.");
+            return storyResult;
+        } catch (InterruptedException | ExecutionException e) {
+            System.err.println("Error retrieving story from executor: " + e.getMessage());
+            return null;
+        }
     }
 
     /**

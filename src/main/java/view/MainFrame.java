@@ -1,9 +1,6 @@
 package view;
 
-import model.Complexity;
-import model.Length;
 import model.StoryModel;
-import model.StrategyType;
 import persistence.Session;
 import view.components.CustomButton;
 
@@ -25,7 +22,6 @@ public class MainFrame extends JFrame
 
     private MainController controller;
     private StoryModel storyModel;
-    private Session session;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
@@ -34,10 +30,17 @@ public class MainFrame extends JFrame
     {
 	  this.controller = controller;
 	  this.storyModel = storyModel;
-	  new MainFrame();
+	  setTitle("AI Story Generator");
+	  setDefaultCloseOperation(EXIT_ON_CLOSE);
+	  initComponents();
+	  layoutComponents();
+	  pack();
+	  Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+	  setSize((int) screenSize.getWidth(), (int) (screenSize.getHeight() - 50));
+	  setVisible(true);
     }
+
     public MainFrame() {
-	  this.session = new Session();
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -100,10 +103,18 @@ public class MainFrame extends JFrame
      */
     public Session getUpdatedSession()
     {
-	  this.session = controlPanel.getOptions();
-	  this.session.setStory(outputArea.getText());
-	  this.storyModel = session.getAsModel();
-	  return session;
+	  updateModel();
+	  return this.storyModel.getAsSession();
+    }
+
+    /**
+     * Updates the model according to the GUI
+     */
+    public void updateModel()
+    {
+	  this.storyModel = controlPanel.getOptions();
+	  this.storyModel.setStory(outputArea.getText());
+	  this.controller.updateModel(storyModel);
     }
 
     /**
@@ -124,19 +135,25 @@ public class MainFrame extends JFrame
      */
     private void onGenerate() {
 	  generateButton.setEnabled(false);
+	  //updating model
+	  updateModel();
 	  generateButton.setText("Generating...");
 
 	  // Run API call in background thread
 	  new SwingWorker<String, Void>() {
+		//Creates a new thread that will run in background while GUI is still responsive.
 		@Override
 		protected String doInBackground() throws Exception {
-		    return controlPanel.getValues();
+		    return controller.generateStory("coworkers");
 		}
 
+		//When the background thread is done, the GUI will be updated.
 		@Override
 		protected void done() {
 		    try {
 			  outputArea.setText(get());
+			  //model also updated accordingly both here and in controller.
+			  updateModel();
 		    } catch (Exception e) {
 			  JOptionPane.showMessageDialog(
 				    MainFrame.this,
@@ -145,6 +162,7 @@ public class MainFrame extends JFrame
 				    JOptionPane.ERROR_MESSAGE
 								 );
 		    } finally {
+			  //Let you use the generate button again now.
 			  generateButton.setEnabled(true);
 			  generateButton.setText("Generate");
 		    }
