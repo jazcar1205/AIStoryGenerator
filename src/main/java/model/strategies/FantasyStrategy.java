@@ -1,8 +1,6 @@
 package model.strategies;
 
-import model.Complexity;
-import model.Length;
-import model.StrategyType;
+import model.*;
 import service.OpenAIService;
 
 public class FantasyStrategy extends StoryStrategy
@@ -11,8 +9,8 @@ public class FantasyStrategy extends StoryStrategy
     public FantasyStrategy(OpenAIService service) { super(service);}
 
     @Override
-    public String generateStory(String prompt, Length length, Complexity complexity) throws Exception {
-        String fullPrompt = length + " " + complexity + " fantasy story: " + prompt;
+    public String generateStory(String prompt, Length length, Complexity complexity, String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters) throws Exception {
+        String fullPrompt = "Length: "+length + ", Complexity: " + complexity +", Setting: " + setting+", Tone: " + tone+", Time Period: " + timePeriod+ ", Pace: " + pace+", Perspective: " + pers+", Characters: " + characters+ ", fantasy story: " + prompt;
         return service.generateText(fullPrompt, 0.7, 500);
     }
 

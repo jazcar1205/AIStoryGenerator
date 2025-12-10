@@ -1,8 +1,6 @@
 package model.strategies;
 
-import model.Complexity;
-import model.Length;
-import model.StrategyType;
+import model.*;
 import service.OpenAIService;
 
 public abstract class StoryStrategy {
@@ -12,7 +10,7 @@ public abstract class StoryStrategy {
         this.service = service;
     }
 
-    public abstract String generateStory(String prompt, Length length, Complexity complexity) throws Exception;
+    public abstract String generateStory(String prompt, Length length, Complexity complexity, String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters) throws Exception;
 
     public abstract StrategyType getStrategyType();
 }
