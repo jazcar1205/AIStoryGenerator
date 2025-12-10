@@ -19,7 +19,7 @@ public class MainFrame extends JFrame implements Observer
     private JLabel fileNameLabel;
     private JScrollPane scrollPane;
     private JTextArea outputArea;
-    private CustomButton generateButton;
+    private GeneratePanel generatePanel;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
 
@@ -67,9 +67,8 @@ public class MainFrame extends JFrame implements Observer
 	  outputArea.setLineWrap(true);
 	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
 
-	  generateButton = new CustomButton("Generate");
-	  generateButton.setSize(50, 50);
-	  generateButton.addActionListener(e -> fakeGenerate());
+	  generatePanel = new GeneratePanel(this);
+	  generatePanel.setSize(getWidth() - 50, (int) (getWidth() - (getWidth() * 0.1)));
 
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth() - (getWidth() * 0.40)), getHeight() - 50);
@@ -131,7 +130,7 @@ public class MainFrame extends JFrame implements Observer
 	  add(scrollPane, BorderLayout.WEST);
 	  add(outputArea, BorderLayout.CENTER);
 	  add(fileOptionsPanel, BorderLayout.EAST);
-	  add(generateButton, BorderLayout.SOUTH);
+	  add(generatePanel, BorderLayout.SOUTH);
 	  pack();
     }
 
@@ -141,52 +140,14 @@ public class MainFrame extends JFrame implements Observer
 	  outputArea.setText(controller.getStory());
     }
 
-    private void fakeGenerate()
+    public void setOutputArea(String text)
     {
-	  outputArea.setText(controller.generateStoryDummy());
+	  outputArea.setText(text);
     }
-    /**
-     * Used to send info to the API to generate text.
-     */
-    private void onGenerate()
-    {
-	  generateButton.setEnabled(false);
-	  generateButton.setText("Generating...");
-	  updateModel();
-	 new SwingWorker<String, Void>()
-	  {
-		//Creates a new thread that will run in background while GUI is still responsive.
-		@Override
-		protected String doInBackground() throws Exception
-		{
-		    return controller.generateStory("coworkers");
-		}
 
-		//When the background thread is done, the GUI will be updated.
-		@Override
-		protected void done()
-		{
-		    try
-		    {
-			  outputArea.setText(get());
-			  //model also updated accordingly both here and in controller.
-			  updateModel();
-		    } catch (Exception e)
-		    {
-			  JOptionPane.showMessageDialog(
-				    MainFrame.this,
-				    "Error: " + e.getMessage(),
-				    "API Error",
-				    JOptionPane.ERROR_MESSAGE
-								 );
-		    } finally
-		    {
-			  //Let you use the generate button again now.
-			  generateButton.setEnabled(true);
-			  generateButton.setText("Generate");
-		    }
-		}
-	  }.execute();
+    public MainController getControllerState()
+    {
+	  return controller;
     }
 
     /**
