@@ -1,6 +1,8 @@
 package controller;
 
 import model.*;
+import model.options.StrategyType;
+import model.options.World;
 import model.strategies.StoryStrategy;
 import persistence.Session;
 import service.APIErrorHandler;
@@ -46,10 +48,18 @@ public class MainController {
 
     public void updateModel(StoryModel model)
     {
+        //String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters
         this.model.setComplexity(model.getComplexity());
         this.model.setLength(model.getLength());
         this.model.setStrategy(model.getStrategy());
+        this.model.setStrategy(model.getStrategy());
         setStrategy(model.getStrategy());
+        this.model.setWorld(new World(model.getSetting(), model.getTimePeriod()));
+        this.model.setTone(model.getTone());
+        this.model.setPace(model.getPace());
+        this.model.setPerspective(model.getPers());
+        this.model.setCharacters(model.getCharacters());
+        this.model.setPromptKeyWords(model.getPromptKeyWords());
     }
 
     public String getStory()
@@ -70,10 +80,9 @@ public class MainController {
     /**
      * Generates a story using the selected strategy.
      *
-     * @param prompt The story prompt
      */
-    public String generateStory(String prompt) {
-        if (prompt == null || prompt.isEmpty()) {
+    public String generateStory() {
+        if (model == null) {
             // NOTE: Even this uses JOptionPane. You should change this too if you want a pure CLI.
             JOptionPane.showMessageDialog(null, "Please enter a prompt to generate a story.");
             return "";
@@ -84,7 +93,7 @@ public class MainController {
             try {
                 if (strategy != null) {
                     // Synchronous generation.
-                    String story = strategy.generateStory(prompt, model.getLength(), model.getComplexity(), model.getSetting(), model.getTone(), model.getTimePeriod(), model.getPace(),model.getPers(),model.getCharacters());
+                    String story = strategy.generateStory(model.getPromptKeyWords(), model.getLength(), model.getComplexity(), model.getSetting(), model.getTone().getTone(), model.getTimePeriod(), model.getPace(),model.getPers(),model.getCharacters().getCharacters());
                     return story;
                 }else
                 {

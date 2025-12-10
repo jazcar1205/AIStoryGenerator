@@ -1,43 +1,33 @@
 package model;
 
+import model.options.*;
 import persistence.Session;
+import java.util.Observable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class StoryModel {
+public class StoryModel extends Observable
+{
     private String story;
     private Length len;
     private Complexity complex;
     private Pace pace;
     private Perspective pers;
-    private String timePeriod;
-    private String setting;
-    private String tone;
-    private String characters;
-
+    private World world;
+    private Tone tone;
+    private Characters characters;
+    private String promptKeyWords;
     private StrategyType strategy;
-    private final List<Observer> observers = new ArrayList<>();
 
     public StoryModel() {
         this.story = "";
-        this.len = Length.MEDIUM;
-        this.complex = Complexity.AVERAGE;
-        this.strategy = StrategyType.FANTASY;
-        this.pace = Pace.NORMAL;
-        this.pers = Perspective.THIRD;
-        setting = "Any";
-        tone = "Any";
-        timePeriod ="Any";
-        this.characters = null;
-    }
-
-    public StoryModel(Length len, Complexity complex, StrategyType strategy)
-    {
-        this.story = "";
-        this.len = len;
-        this.complex = complex;
-        this.strategy = strategy;
+        this.promptKeyWords = "";
+        this.len = Length.ANY;
+        this.complex = Complexity.ANY;
+        this.strategy = StrategyType.ANY;
+        this.pace = Pace.ANY;
+        this.pers = Perspective.ANY;
+        this.world = new World();
+        this.tone = new Tone();
+        this.characters = new Characters();
     }
     public StoryModel(String story, Length len, Complexity complex, StrategyType strategy)
     {
@@ -47,39 +37,50 @@ public class StoryModel {
         this.strategy = strategy;
     }
 
-    public StoryModel(String story, Length len, Complexity complex, StrategyType strategy,World world, Tone tone,Pace pace, Perspective pers, String characters)
+    public StoryModel(String story, Length len, Complexity complex, StrategyType strategy,World world, Tone tone,Pace pace, Perspective pers, Characters characters)
     {
         this.story = story;
         this.len = len;
         this.complex = complex;
         this.strategy = strategy;
-
         this.pace = pace;
         this.pers = pers;
-        setting = world.getSetting();
-        this.tone = tone.getTone();
-        timePeriod = world.getTimePeriod();
+        this.world = world;
+        this.tone = tone;
         this.characters = characters;
     }
 
-    public StoryModel(String story, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
+    public StoryModel(String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
     {
-        this.story = story;
+        this.promptKeyWords = prompt;
         this.len = len;
         this.complex = complex;
         this.strategy = strategy;
-
         this.pace = pace;
         this.pers = pers;
-        this.setting = setting;
-        this.tone = tone;
-        this.timePeriod = timePeriod;
-        this.characters = characters;
+        this.world = new World(setting, timePeriod);
+        this.tone = new Tone(tone);
+        this.characters = new Characters(characters);
+    }
+
+    public StoryModel(String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
+    {
+        this.story = story;
+        this.promptKeyWords = prompt;
+        this.len = len;
+        this.complex = complex;
+        this.strategy = strategy;
+        this.pace = pace;
+        this.pers = pers;
+        this.world = new World(setting, timePeriod);
+        this.tone = new Tone(tone);
+        this.characters = new Characters(characters);
     }
 
 
     public void setStory(String story) {
         this.story = story;
+        setChanged();
         notifyObservers();
     }
 
@@ -104,21 +105,29 @@ public class StoryModel {
     }
 
     public void setWorld(World world) {
-        timePeriod = world.getTimePeriod();
-        setting = world.getSetting();
+        this.world = world;
         notifyObservers();
     }
 
     public void setTone(Tone tone) {
-        this.tone = tone.getTone();
+        this.tone = tone;
         notifyObservers();
     }
 
-    public void setCharacters(String characters) {
+    public void setCharacters(Characters characters) {
         this.characters = characters;
         notifyObservers();
     }
 
+    public String getPromptKeyWords()
+    {
+        return promptKeyWords;
+    }
+
+    public void setPromptKeyWords(String promptKeyWords)
+    {
+        this.promptKeyWords = promptKeyWords;
+    }
     public void setStrategy(StrategyType strategy)
     {
         this.strategy = strategy;
@@ -131,47 +140,28 @@ public class StoryModel {
     public String getStory() {return story;}
     public Length getLength() { return len; }
     public Complexity getComplexity() { return complex; }
-    public String getTone() {return tone;}
+    public Tone getTone() {return tone;}
     public Pace getPace() {return pace;}
     public Perspective getPers() {return pers;}
-    public String getTimePeriod() {return timePeriod;}
-    public String getSetting() {return setting;}
-    public String getCharacters() {return characters;}
+    public String getTimePeriod() {return world.getTimePeriod();}
+    public String getSetting() {return world.getSetting();}
+    public Characters getCharacters() {return characters;}
 
-    public Session getAsSession() { return new Session(story, complex, len, strategy, pace, pers, timePeriod,tone,setting, characters);}
-
-    public void attach(Observer o) {
-        observers.add(o);
-    }
-
-    public void detach(Observer o) {
-        observers.remove(o);
-    }
-
-    private void notifyObservers() {
-        for (Observer o : observers) o.update(story, len, complex,setting,tone,timePeriod,pace,pers,characters);
-    }
-
-    public interface Observer {
-        void update(String story, Length len, Complexity complex,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters );
-    }
-
+    public Session getAsSession() { return new Session(story, promptKeyWords,complex, len, strategy, pace, pers,world,tone,characters);}
     @Override
     public String toString()
     {
         return "StoryModel{" +
-                "story='" + story + '\'' +
-                ", len=" + len +
-                ", complex=" + complex +
-                ", strategy=" + strategy +
-                ", pace=" + pace +
-                ", time period=" + timePeriod +
-                ", tone=" + tone +
-                ", perspective=" + pers +
-                ", setting=" + setting +
-                ", characters=" + characters +
-                ", observers=" + observers +
-                '}';
+                "story='" + story +
+                ", \nprompt= " + promptKeyWords +
+                ", \nlen=" + len +
+                ", \ncomplex=" + complex +
+                ", \nstrategy=" + strategy +
+                ", \npace=" + pace +
+                ", \nworld =" + world.toString() +
+                ", \ntone=" + tone.toString() +
+                ", \nperspective=" + pers +
+                ", \ncharacters=" + characters.toString();
     }
 
 }

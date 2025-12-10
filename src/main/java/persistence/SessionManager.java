@@ -1,6 +1,6 @@
 package persistence;
 
-import model.*;
+import model.options.*;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -27,6 +27,7 @@ public class SessionManager {
         try {
             JSONObject json = new JSONObject();
             json.put("story", session.getStory());
+            json.put("prompt", session.getPromptKeyWords());
             json.put("complexity", session.getComplexity());
             json.put("length", session.getLength());
             json.put("strategy", session.getStoryStrategy());
@@ -58,6 +59,7 @@ public class SessionManager {
 
             Session session = new Session();
             session.setStory(json.optString("story"));
+            session.setPromptKeyWords(json.optString("prompt"));
             session.setComplexity(json.optEnum(Complexity.class, "complexity"));
             session.setLength(json.optEnum(Length.class, "length"));
             session.setStoryStrategy(json.optEnum(StrategyType.class, "strategy"));

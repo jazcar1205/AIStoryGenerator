@@ -1,6 +1,6 @@
 package model.strategies;
 
-import model.*;
+import model.options.*;
 import service.OpenAIService;
 
 public class GenericStrategy extends StoryStrategy

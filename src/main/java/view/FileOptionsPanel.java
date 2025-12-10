@@ -17,6 +17,7 @@ import java.util.Scanner;
  */
 public class FileOptionsPanel extends JPanel
 {
+    private JLabel fileNameLabel;
     private CustomButton saveButton;
     private CustomButton loadButton;
     private LabeledTextField tagsLabel;
@@ -32,6 +33,7 @@ public class FileOptionsPanel extends JPanel
     public FileOptionsPanel(MainFrame parent)
     {
 	  this.parent = parent;
+	  fileNameLabel = new JLabel("Untitled.txt");
 	  this.tags = new ArrayList<>(); //need to set this to what is gotten from the file.
 	  sessionManager = new SessionManager();
 	  setBorder(BorderFactory.createTitledBorder("File Management"));
@@ -39,28 +41,47 @@ public class FileOptionsPanel extends JPanel
 	  saveButton = new CustomButton("Save");
 	  loadButton = new CustomButton("Load");
 	  tagsLabel = new LabeledTextField("Tags", 3, 10);
+
+
+	  //centering everything.
+	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+	  saveButton.setHorizontalAlignment(SwingConstants.CENTER);
+	  loadButton.setHorizontalAlignment(SwingConstants.CENTER);
+
+
+	  setMinimumSize(new Dimension((int)loadButton.getPreferredSize().getWidth(), getHeight()));
 	  addTags = new CustomButton("Add Tags");
+	  add(fileNameLabel);
 	  add(Box.createRigidArea(new Dimension(0,20)));
+	  //setup save option with dialog.
 	  saveButton.addActionListener(e -> {
 		SaveDialog sd = new SaveDialog();
 		sd.setVisible(true);
 		//System.out.println("File name" + this.fileName);
 		//need save actions from session.
-		sessionManager.saveSession(parent.getUpdatedSession(), sd.getFileName());
-		this.parent.setFileNameLabel(sd.getFileName());
+		if(!sd.getFileName().isEmpty())
+		{
+		    sessionManager.saveSession(parent.getUpdatedSession(), sd.getFileName());
+		    fileNameLabel.setText("FILE: " + sd.getFileName());
+		}
 		sd.setVisible(false);
 	  });
 	  add(saveButton);
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(loadButton);
+
+	  //setup load option with dialog.
 	  loadButton.addActionListener(e -> {
 		LoadDialog ld = new LoadDialog();
 		ld.setVisible(true);
 		//need load actions from session.
 		Session newSession = sessionManager.loadSession(ld.getFileName());
 		//System.out.println(newSession);
-		this.parent.setFileNameLabel(ld.getFileName());
-		this.parent.setControlPanelOptions(newSession);
+		if(!ld.getFileName().isEmpty())
+		{
+		    fileNameLabel.setText("FILE: " + ld.getFileName());
+		    this.parent.setControlPanelOptions(newSession);
+		}
 	  });
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  add(tagsLabel);

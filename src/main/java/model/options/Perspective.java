@@ -1,8 +1,9 @@
-package model;
+package model.options;
 /**
  * enum for Perspective options.
  */
 public enum Perspective {
+    ANY("Any"),
     FIRST("1st"),
     THIRD("3rd");
 
@@ -23,9 +24,11 @@ public enum Perspective {
         switch(this)
         {
             case FIRST:
-                return "1st";
+                return "First";
             case THIRD:
-                return "3rd";
+                return "Third";
+            case ANY:
+                return "Any";
         }
         return null;
     }

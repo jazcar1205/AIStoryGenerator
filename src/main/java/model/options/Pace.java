@@ -1,9 +1,10 @@
-package model;
+package model.options;
 
 /**
  * enum for Pace options.
  */
 public enum Pace {
+    ANY("Any"),
     SLOW("Slow"),
     NORMAL("Normal"),
     FAST("Fast");
@@ -30,6 +31,8 @@ public enum Pace {
                 return "Normal";
             case FAST:
                 return "Fast";
+            case ANY:
+                return "Any";
         }
         return null;
     }

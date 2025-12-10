@@ -1,10 +1,11 @@
-package model;
+package model.options;
 
 /**
  * Provides options for the genre/strategy.
  */
 public enum StrategyType
 {
+    ANY("ANY"),
     FANTASY("Fantasy"),
     HORROR("Horror"),
     ROMANCE("Romance"),
@@ -36,6 +37,8 @@ public enum StrategyType
                 return "Romance";
             case SCIFI:
                 return "SciFi";
+            case ANY:
+                return "Any";
         }
         return null;
     }

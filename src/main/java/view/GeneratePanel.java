@@ -7,40 +7,51 @@ import java.awt.*;
 
 public class GeneratePanel extends JPanel
 {
-    private MainFrame parent;
-    private CustomButton generateButton;
-    private CustomButton cancelButton;
+    private final MainFrame parent;
+    private final CustomButton generateButton;
+    private final CustomButton cancelButton;
+    private final JTextArea outputArea;
+
     public GeneratePanel(MainFrame parent)
     {
 	  this.parent = parent;
-	  setLayout(new GridBagLayout());
+	  setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+	  outputArea = new JTextArea(50, 50);
+	  outputArea.setEditable(false);
+	  outputArea.setLineWrap(true);
+	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
+	  setPreferredSize(outputArea.getPreferredSize());
+	  setMinimumSize(outputArea.getMinimumSize());
+
+	  JPanel buttons = new JPanel(new GridBagLayout());
 	  GridBagConstraints gbc = new GridBagConstraints();
 	  // Common settings for all components
-	  gbc.fill = GridBagConstraints.HORIZONTAL; // Make the component fill its display area horizontally
+	  gbc.fill = GridBagConstraints.HORIZONTAL;
 	  gbc.insets = new Insets(5, 5, 5, 5);
 
-	  CustomButton blank = new CustomButton("");
-	  blank.setEnabled(false);
-	  gbc.gridx = 0;
-	  gbc.weightx = 0.3;
-	  add(blank, gbc);
 	  //setting up generate button to take up 70% of the space
 	  generateButton = new CustomButton("Generate");
 	  generateButton.addActionListener(e -> onGenerate());
-	  gbc.gridx = 1;
-	  gbc.weightx = 0.5;
-	  add(generateButton, gbc);
+	  gbc.gridx = 0;
+	  gbc.weightx = 0.8;
+	  buttons.add(generateButton, gbc);
 
 	  //cancel button will take up 30%
 	  cancelButton = new CustomButton("Cancel");
 	  cancelButton.addActionListener(e -> cancelRequest());
 	  cancelButton.setEnabled(false);
-	  gbc.gridx = 2;
+	  gbc.gridx = 1;
 	  gbc.weightx = 0.2;
-	  add(cancelButton, gbc);
+	  buttons.add(cancelButton, gbc);
+	  add(outputArea, BorderLayout.NORTH);
+	  add(buttons, BorderLayout.SOUTH);
     }
 
+    public void setOutputText(String text)
+    {
+	  outputArea.setText(text);
+    }
     private void cancelRequest()
     {
 	  System.out.println("Cancel Request");
@@ -48,7 +59,8 @@ public class GeneratePanel extends JPanel
 
     private void fakeGenerate()
     {
-	  parent.setOutputArea(parent.getControllerState().generateStoryDummy());
+	  parent.updateModel();
+	  outputArea.setText(parent.getControllerState().generateStoryDummy());
     }
     /**
      * Used to send info to the API to generate text.
@@ -65,7 +77,7 @@ public class GeneratePanel extends JPanel
 		@Override
 		protected String doInBackground() throws Exception
 		{
-		    return parent.getControllerState().generateStory("coworkers");
+		    return parent.getControllerState().generateStory();
 		}
 
 		//When the background thread is done, the GUI will be updated.
@@ -74,7 +86,7 @@ public class GeneratePanel extends JPanel
 		{
 		    try
 		    {
-			  parent.setOutputArea(get());
+			  outputArea.setText(get());
 			  //model also updated accordingly both here and in controller.
 			  parent.updateModel();
 		    } catch (Exception e)

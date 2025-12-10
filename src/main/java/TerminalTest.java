@@ -1,5 +1,6 @@
 import controller.MainController;
 import model.*;
+import model.options.*;
 import persistence.Session;
 import persistence.SessionManager;
 import service.OpenAIService;
@@ -13,7 +14,7 @@ public class TerminalTest {
         Scanner scanner = new Scanner(System.in);
 
         StoryModel model = new StoryModel();
-        model.attach((story, length, complexity,setting,tone, timePeriod,pace,perspective,characters) ->
+        /*model.attach((story, length, complexity,setting,tone, timePeriod,pace,perspective,characters) ->
                 System.out.println("\n=== Updated Story ===\n"
                         + story
                         + "\n Settings"
@@ -26,6 +27,8 @@ public class TerminalTest {
                         + "\nPerspective: " + perspective + "\n"
                         + "\nCharacters: " + characters + "\n"
         ));
+
+         */
 
         OpenAIService service = OpenAIService.getInstance();
         MainController controller = new MainController(model,service);
@@ -146,7 +149,7 @@ public class TerminalTest {
         model.setTone(style);
         model.setPace(pace);
         model.setPerspective(perspective);
-        model.setCharacters(characters.getCharacters());
+        model.setCharacters(characters);
 
         System.out.println("\n--------------------------------------------------------------------\n");
 
@@ -176,7 +179,7 @@ public class TerminalTest {
                 case "1" -> {
                     System.out.print("Enter prompt: ");
                     String prompt = scanner.nextLine().trim();
-                    controller.generateStory(prompt);
+                    controller.generateStory();
                     System.out.println("Generating......");
                     // Temporary wait for async generation
                     try { Thread.sleep(6000); } catch (InterruptedException ignored) {}

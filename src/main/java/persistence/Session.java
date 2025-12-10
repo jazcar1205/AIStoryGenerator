@@ -1,5 +1,6 @@
 package persistence;
 import model.*;
+import model.options.*;
 
 /**
  * Represents the current session.
@@ -12,6 +13,7 @@ public class Session{
     private Length length;
     private StrategyType strategyType;
     private Pace pace;
+    private String promptKeyWords;
     private Perspective pers;
     private String timePeriod;
     private String setting;
@@ -55,17 +57,19 @@ public class Session{
         this.strategyType = storyStrategy;
     }
 
-    public Session(String story, Complexity complex, Length len, StrategyType strategy, Pace pace, Perspective pers, String timePeriod, String tone, String setting,String characters) {
+    public Session(String story, String promptKeyWords,Complexity complex, Length len, StrategyType strategy, Pace pace,
+                   Perspective pers, World world, Tone tone, Characters characters) {
         this.story = story;
+        this.promptKeyWords = promptKeyWords;
         this.length = len;
         this.complexity = complex;
         this.strategyType = strategy;
         this.pace = pace;
         this.pers = pers;
-        this.setting = setting;
-        this.tone = tone;
-        this.timePeriod = timePeriod;
-        this.characters = characters;
+        this.setting = world.getSetting();
+        this.tone = tone.getTone();
+        this.timePeriod = world.getTimePeriod();
+        this.characters = characters.getCharacters();
     }
 
     // Getters and setters
@@ -119,7 +123,7 @@ public class Session{
 
     public StoryModel getAsModel()
     {
-        return new StoryModel(this.story, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
+        return new StoryModel(this.story, this.promptKeyWords, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
     }
 
     @Override
@@ -137,5 +141,25 @@ public class Session{
                 ", setting=" + setting +
                 ", characters=" + characters +
                 '}';
+    }
+
+    public StrategyType getStrategyType()
+    {
+        return strategyType;
+    }
+
+    public void setStrategyType(StrategyType strategyType)
+    {
+        this.strategyType = strategyType;
+    }
+
+    public String getPromptKeyWords()
+    {
+        return promptKeyWords;
+    }
+
+    public void setPromptKeyWords(String promptKeyWords)
+    {
+        this.promptKeyWords = promptKeyWords;
     }
 }
