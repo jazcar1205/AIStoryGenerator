@@ -13,6 +13,7 @@ public class Session{
     private Length length;
     private StrategyType strategyType;
     private Pace pace;
+    private String promptKeyWords;
     private Perspective pers;
     private String timePeriod;
     private String setting;
@@ -120,7 +121,7 @@ public class Session{
 
     public StoryModel getAsModel()
     {
-        return new StoryModel(this.story, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
+        return new StoryModel(this.story, this.promptKeyWords, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
     }
 
     @Override

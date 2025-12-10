@@ -92,7 +92,6 @@ public class ControlPanel extends JPanel
 	  lengthField.setSelection(model.getLength().toString());
 	  complexityField.setSelection(model.getComplexity().toString());
 	  genreField.setSelection(model.getStrategy().toString());
-	  //need to add more when get updated model
     }
 
     /**
@@ -103,7 +102,9 @@ public class ControlPanel extends JPanel
     {
 	  //need to update with more model fields.
 	  return new StoryModel(Length.getLength(lengthField.getSelection()),
-		    Complexity.getComplexity(complexityField.getSelection()), StrategyType.getStrat(genreField.getSelection()));
+		    Complexity.getComplexity(complexityField.getSelection()),
+		    StrategyType.getStrat(genreField.getSelection())
+	  );
     }
 
     /**
