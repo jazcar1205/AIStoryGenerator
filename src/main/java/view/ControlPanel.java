@@ -18,6 +18,7 @@ public class ControlPanel extends JPanel
     private LabeledComboBox genreField;
     private LabeledComboBox paceField;
     private LabeledComboBox persepctiveField;
+    private LabeledTextField promptField;
     private LabeledTextField characterField;
     private LabeledTextField settingField;
     private LabeledTextField timePeriodField;
@@ -45,6 +46,7 @@ public class ControlPanel extends JPanel
 	  genreField = new LabeledComboBox("Genre ", new String[]{"Fantasy", "Horror", "Romance", "SciFi"});
 	  paceField = new LabeledComboBox("Development Pace", new String[]{"Slow", "Normal", "Fast"});
 	  persepctiveField = new LabeledComboBox("Perspective ", new String[]{"1st", "3rd"});
+	  promptField = new LabeledTextField("Prompt Keywords", 5, 30);
 	  toneField = new LabeledTextField("Tone ", 5,30);
 	  characterField = new LabeledTextField("Characters ", 10,30);
 	  settingField = new LabeledTextField("Setting", 10,30);
@@ -61,6 +63,7 @@ public class ControlPanel extends JPanel
 	  add(genreField);
 	  add(paceField);
 	  add(persepctiveField);
+	  add(promptField);
 	  add(toneField);
 	  add(timePeriodField);
 	  add(settingField);
