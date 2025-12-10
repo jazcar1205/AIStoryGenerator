@@ -20,11 +20,11 @@ public class StoryModel extends Observable
 
     public StoryModel() {
         this.story = "";
-        this.len = Length.MEDIUM;
-        this.complex = Complexity.AVERAGE;
-        this.strategy = StrategyType.FANTASY;
-        this.pace = Pace.NORMAL;
-        this.pers = Perspective.THIRD;
+        this.len = Length.ANY;
+        this.complex = Complexity.ANY;
+        this.strategy = StrategyType.ANY;
+        this.pace = Pace.ANY;
+        this.pers = Perspective.ANY;
         setting = "Any";
         tone = "Any";
         timePeriod ="Any";

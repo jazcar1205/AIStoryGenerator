@@ -40,12 +40,12 @@ public class ControlPanel extends JPanel
      */
     private void initComponents()
     {
-	  lengthField = new LabeledComboBox("Length", new String[] {"Short", "Medium", "Long"});
+	  lengthField = new LabeledComboBox("Length", new String[] {"ANY", "Short", "Medium", "Long"});
 	  complexityField = new LabeledComboBox("Complexity",
-		    new String[] {"Child Friendly", "Average", "Complex"});
-	  genreField = new LabeledComboBox("Genre ", new String[]{"Fantasy", "Horror", "Romance", "SciFi"});
-	  paceField = new LabeledComboBox("Development Pace", new String[]{"Slow", "Normal", "Fast"});
-	  persepctiveField = new LabeledComboBox("Perspective ", new String[]{"1st", "3rd"});
+		    new String[] {"ANY", "Child Friendly", "Average", "Complex"});
+	  genreField = new LabeledComboBox("Genre ", new String[]{"ANY", "Fantasy", "Horror", "Romance", "SciFi"});
+	  paceField = new LabeledComboBox("Development Pace", new String[]{"ANY", "Slow", "Normal", "Fast"});
+	  persepctiveField = new LabeledComboBox("Perspective ", new String[]{"ANY","1st", "3rd"});
 	  promptField = new LabeledTextField("Prompt Keywords", 5, 30);
 	  toneField = new LabeledTextField("Tone ", 5,30);
 	  characterField = new LabeledTextField("Characters ", 10,30);

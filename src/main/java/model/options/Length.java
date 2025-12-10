@@ -4,6 +4,7 @@ package model.options;
  * Provides the options for the length.
  */
 public enum Length {
+    ANY("Any"),
     SHORT("Short"),
     MEDIUM("Medium"),
     LONG("Long");
@@ -29,6 +30,8 @@ public enum Length {
                 return "Medium";
             case LONG:
                 return "Long";
+            case ANY:
+                return "Any";
         }
         return null;
     }

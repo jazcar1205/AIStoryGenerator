@@ -3,6 +3,7 @@ package model.options;
  * enum for Perspective options.
  */
 public enum Perspective {
+    ANY("Any"),
     FIRST("1st"),
     THIRD("3rd");
 
@@ -26,6 +27,8 @@ public enum Perspective {
                 return "1st";
             case THIRD:
                 return "3rd";
+            case ANY:
+                return "Any";
         }
         return null;
     }

@@ -4,6 +4,7 @@ package model.options;
  * enum for complexity options.
  */
 public enum Complexity {
+    ANY("ANY"),
     CHILDFRIENDLY("Child Friendly"),
     AVERAGE("Average"),
     COMPLEX("Complex");
@@ -30,6 +31,8 @@ public enum Complexity {
                 return "Average";
             case COMPLEX:
                 return "Complex";
+            case ANY:
+                return "Any";
         }
         return null;
     }
