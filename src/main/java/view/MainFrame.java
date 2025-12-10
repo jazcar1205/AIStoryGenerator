@@ -6,30 +6,32 @@ import view.components.CustomButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Observable;
+import java.util.Observer;
 
 import controller.MainController;
+
 /**
  * Creates the main frame of the program.
  */
-public class MainFrame extends JFrame
+public class MainFrame extends JFrame implements Observer
 {
     private JLabel fileNameLabel;
     private JScrollPane scrollPane;
     private JTextArea outputArea;
-    private CustomButton generateButton;
+    private GeneratePanel generatePanel;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
 
     private MainController controller;
-    private StoryModel storyModel;
 
     /**
      * Creates the main frame, initilizes components, and sets up layout.
      */
-    public MainFrame(StoryModel storyModel, MainController controller)
+    public MainFrame(MainController controller)
     {
 	  this.controller = controller;
-	  this.storyModel = storyModel;
+	  this.controller.attachObserver(this);
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -40,7 +42,8 @@ public class MainFrame extends JFrame
 	  setVisible(true);
     }
 
-    public MainFrame() {
+    public MainFrame()
+    {
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
 	  initComponents();
@@ -54,7 +57,8 @@ public class MainFrame extends JFrame
     /**
      * Initializes all components in the frame.
      */
-    private void initComponents() {
+    private void initComponents()
+    {
 	  fileNameLabel = new JLabel("Untitled.txt");
 	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -63,15 +67,14 @@ public class MainFrame extends JFrame
 	  outputArea.setLineWrap(true);
 	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
 
-	  generateButton = new CustomButton("Generate");
-	  generateButton.setSize(50, 50);
-	  generateButton.addActionListener(e -> onGenerate());
+	  generatePanel = new GeneratePanel(this);
+	  generatePanel.setSize(getWidth() - 50, (int) (getWidth() - (getWidth() * 0.1)));
 
 	  controlPanel = new ControlPanel();
-	  controlPanel.setSize((int) (getWidth()- (getWidth()*0.40)), getHeight()-50);
+	  controlPanel.setSize((int) (getWidth() - (getWidth() * 0.40)), getHeight() - 50);
 
 	  fileOptionsPanel = new FileOptionsPanel(this);
-	  fileOptionsPanel.setSize((int) (getWidth()- (getWidth()*0.2)), getHeight()-50);
+	  fileOptionsPanel.setSize((int) (getWidth() - (getWidth() * 0.2)), getHeight() - 50);
 
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -79,6 +82,7 @@ public class MainFrame extends JFrame
 
     /**
      * Sets the label for the file name.
+     *
      * @param fileNameLabel
      */
     public void setFileNameLabel(String fileNameLabel)
@@ -89,6 +93,7 @@ public class MainFrame extends JFrame
     /**
      * Sets the control panel options and updates the output area according
      * to the session provided.
+     *
      * @param session
      */
     public void setControlPanelOptions(Session session)
@@ -99,12 +104,13 @@ public class MainFrame extends JFrame
 
     /**
      * Get the updated session from the currently selected options.
+     *
      * @return
      */
     public Session getUpdatedSession()
     {
 	  updateModel();
-	  return this.storyModel.getAsSession();
+	  return this.controller.getSession();
     }
 
     /**
@@ -112,9 +118,7 @@ public class MainFrame extends JFrame
      */
     public void updateModel()
     {
-	  this.storyModel = controlPanel.getOptions();
-	  this.storyModel.setStory(outputArea.getText());
-	  this.controller.updateModel(storyModel);
+	  this.controller.updateModel(controlPanel.getOptions());
     }
 
     /**
@@ -126,55 +130,33 @@ public class MainFrame extends JFrame
 	  add(scrollPane, BorderLayout.WEST);
 	  add(outputArea, BorderLayout.CENTER);
 	  add(fileOptionsPanel, BorderLayout.EAST);
-	  add(generateButton, BorderLayout.SOUTH);
+	  add(generatePanel, BorderLayout.SOUTH);
 	  pack();
     }
 
-    /**
-     * Used to send info to the API to generate text.
-     */
-    private void onGenerate() {
-	  generateButton.setEnabled(false);
-	  //updating model
-	  updateModel();
-	  generateButton.setText("Generating...");
+    @Override
+    public void update(Observable o, Object arg)
+    {
+	  outputArea.setText(controller.getStory());
+    }
 
-	  // Run API call in background thread
-	  new SwingWorker<String, Void>() {
-		//Creates a new thread that will run in background while GUI is still responsive.
-		@Override
-		protected String doInBackground() throws Exception {
-		    return controller.generateStory("coworkers");
-		}
+    public void setOutputArea(String text)
+    {
+	  outputArea.setText(text);
+    }
 
-		//When the background thread is done, the GUI will be updated.
-		@Override
-		protected void done() {
-		    try {
-			  outputArea.setText(get());
-			  //model also updated accordingly both here and in controller.
-			  updateModel();
-		    } catch (Exception e) {
-			  JOptionPane.showMessageDialog(
-				    MainFrame.this,
-				    "Error: " + e.getMessage(),
-				    "API Error",
-				    JOptionPane.ERROR_MESSAGE
-								 );
-		    } finally {
-			  //Let you use the generate button again now.
-			  generateButton.setEnabled(true);
-			  generateButton.setText("Generate");
-		    }
-		}
-	  }.execute();
+    public MainController getControllerState()
+    {
+	  return controller;
     }
 
     /**
      * Run that app!
+     *
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
 	  SwingUtilities.invokeLater(MainFrame::new);
     }
 }

@@ -1,8 +1,12 @@
-package model;
+package model.strategies;
 
+import model.Complexity;
+import model.Length;
+import model.StrategyType;
 import service.OpenAIService;
 
-public class GenericStrategy extends StoryStrategy {
+public class GenericStrategy extends StoryStrategy
+{
 
     public GenericStrategy(OpenAIService service) {
         super(service);

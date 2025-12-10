@@ -1,11 +1,13 @@
 package controller;
 
 import model.*;
+import model.strategies.StoryStrategy;
 import persistence.Session;
 import service.APIErrorHandler;
 import service.OpenAIService;
 
 import javax.swing.*;
+import java.util.Observer;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -15,7 +17,7 @@ public class MainController {
 
     private StoryModel model;
     private StoryStrategy strategy;
-    private OpenAIService service;
+    private final OpenAIService service;
     private final ExecutorService executor;
 
     public MainController(StoryModel model, OpenAIService service) {
@@ -44,12 +46,25 @@ public class MainController {
 
     public void updateModel(StoryModel model)
     {
-        this.model = model;
+        this.model.setComplexity(model.getComplexity());
+        this.model.setLength(model.getLength());
+        this.model.setStrategy(model.getStrategy());
+        setStrategy(model.getStrategy());
     }
 
     public String getStory()
     {
         return model.getStory();
+    }
+
+    public Session getSession()
+    {
+        return model.getAsSession();
+    }
+
+    public void attachObserver(Observer observer)
+    {
+        model.addObserver(observer);
     }
 
     /**
@@ -70,7 +85,6 @@ public class MainController {
                 if (strategy != null) {
                     // Synchronous generation.
                     String story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
-                    SwingUtilities.invokeLater(() -> model.setStory(story));
                     return story;
                 }else
                 {
@@ -88,6 +102,7 @@ public class MainController {
         try {
             String storyResult = storyFuture.get(); // Will block thread from moving on until this is completed.
             System.out.println("Story successfully generated and retrieved from Future.");
+            model.setStory(storyResult);
             return storyResult;
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("Error retrieving story from executor: " + e.getMessage());

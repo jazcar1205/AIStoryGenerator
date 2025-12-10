@@ -1,5 +1,6 @@
 import controller.MainController;
 import model.*;
+import model.strategies.StoryStrategy;
 import persistence.ConfigLoader;
 import persistence.Session;
 import persistence.SessionManager;
@@ -13,12 +14,14 @@ public class TerminalTest {
         Scanner scanner = new Scanner(System.in);
 
         StoryModel model = new StoryModel();
-        model.attach((story, length, complexity) ->
+        /* model.attach((story, length, complexity) ->
                 System.out.println("\n=== Updated Story ===\n"
                         + story
                         + "\nLength: " + length
                         + "\nComplexity: " + complexity + "\n")
         );
+
+         */
 
         OpenAIService service = new OpenAIService(ConfigLoader.getKey("OPENAI_API_KEY"));
 
