@@ -2,11 +2,10 @@ package model;
 
 import model.options.*;
 import persistence.Session;
+import java.util.Observable;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class StoryModel {
+public class StoryModel extends Observable
+{
     private String story;
     private Length len;
     private Complexity complex;
@@ -18,7 +17,6 @@ public class StoryModel {
     private String characters;
 
     private StrategyType strategy;
-    private final List<Observer> observers = new ArrayList<>();
 
     public StoryModel() {
         this.story = "";
@@ -140,23 +138,6 @@ public class StoryModel {
     public String getCharacters() {return characters;}
 
     public Session getAsSession() { return new Session(story, complex, len, strategy, pace, pers, timePeriod,tone,setting, characters);}
-
-    public void attach(Observer o) {
-        observers.add(o);
-    }
-
-    public void detach(Observer o) {
-        observers.remove(o);
-    }
-
-    private void notifyObservers() {
-        for (Observer o : observers) o.update(story, len, complex,setting,tone,timePeriod,pace,pers,characters);
-    }
-
-    public interface Observer {
-        void update(String story, Length len, Complexity complex,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters );
-    }
-
     @Override
     public String toString()
     {
@@ -170,9 +151,7 @@ public class StoryModel {
                 ", tone=" + tone +
                 ", perspective=" + pers +
                 ", setting=" + setting +
-                ", characters=" + characters +
-                ", observers=" + observers +
-                '}';
+                ", characters=" + characters;
     }
 
 }

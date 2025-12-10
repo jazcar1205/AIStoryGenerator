@@ -14,7 +14,7 @@ public class TerminalTest {
         Scanner scanner = new Scanner(System.in);
 
         StoryModel model = new StoryModel();
-        model.attach((story, length, complexity,setting,tone, timePeriod,pace,perspective,characters) ->
+        /*model.attach((story, length, complexity,setting,tone, timePeriod,pace,perspective,characters) ->
                 System.out.println("\n=== Updated Story ===\n"
                         + story
                         + "\n Settings"
@@ -27,6 +27,8 @@ public class TerminalTest {
                         + "\nPerspective: " + perspective + "\n"
                         + "\nCharacters: " + characters + "\n"
         ));
+
+         */
 
         OpenAIService service = OpenAIService.getInstance();
         MainController controller = new MainController(model,service);
