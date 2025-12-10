@@ -95,8 +95,8 @@ public class ControlPanel extends JPanel
 	  settingField.setText(model.getSetting());
 	  timePeriodField.setText(model.getTimePeriod());
 	  toneField.setText(model.getTone().getTone());
-	  paceField.setSelection(model.getStrategy().toString());
-	  persepctiveField.setSelection(model.getStrategy().toString());
+	  paceField.setSelection(model.getPace().toString());
+	  persepctiveField.setSelection(model.getPers().toString());
 	  characterField.setText(model.getCharacters().getCharacters());
     }
 

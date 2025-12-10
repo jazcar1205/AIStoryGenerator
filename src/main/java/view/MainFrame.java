@@ -98,7 +98,7 @@ public class MainFrame extends JFrame implements Observer
      */
     public void setControlPanelOptions(Session session)
     {
-	  controlPanel.setOptions(session.getLength(), session.getComplexity(), session.getStoryStrategy());
+	  controlPanel.setOptions(session.getAsModel());
 	  outputArea.setText(session.getStory());
     }
 

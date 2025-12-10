@@ -24,9 +24,9 @@ public enum Perspective {
         switch(this)
         {
             case FIRST:
-                return "1st";
+                return "First";
             case THIRD:
-                return "3rd";
+                return "Third";
             case ANY:
                 return "Any";
         }
