@@ -18,7 +18,6 @@ public class MainFrame extends JFrame implements Observer
 {
     private JLabel fileNameLabel;
     private JScrollPane scrollPane;
-    private JTextArea outputArea;
     private GeneratePanel generatePanel;
     private ControlPanel controlPanel;
     private FileOptionsPanel fileOptionsPanel;
@@ -34,6 +33,7 @@ public class MainFrame extends JFrame implements Observer
 	  this.controller.attachObserver(this);
 	  setTitle("AI Story Generator");
 	  setDefaultCloseOperation(EXIT_ON_CLOSE);
+	  setLayout(new GridBagLayout());
 	  initComponents();
 	  layoutComponents();
 	  pack();
@@ -62,24 +62,41 @@ public class MainFrame extends JFrame implements Observer
 	  fileNameLabel = new JLabel("Untitled.txt");
 	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-	  outputArea = new JTextArea(10, 100);
-	  outputArea.setEditable(false);
-	  outputArea.setLineWrap(true);
-	  outputArea.setBorder(BorderFactory.createTitledBorder("Generated Content"));
-
 	  generatePanel = new GeneratePanel(this);
-	  generatePanel.setSize(getWidth() - 50, (int) (getWidth() - (getWidth() * 0.1)));
+	  //generatePanel.setPreferredSize(new Dimension(0, getHeight()));
 
 	  controlPanel = new ControlPanel();
-	  controlPanel.setSize((int) (getWidth() - (getWidth() * 0.40)), getHeight() - 50);
-
-	  fileOptionsPanel = new FileOptionsPanel(this);
-	  fileOptionsPanel.setSize((int) (getWidth() - (getWidth() * 0.2)), getHeight() - 50);
-
+	  //controlPanel.setMinimumSize(new Dimension(100, 0));
 	  scrollPane = new JScrollPane(controlPanel);
 	  scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+	  scrollPane.setMinimumSize(controlPanel.getMinimumSize());
+
+	  fileOptionsPanel = new FileOptionsPanel(this);
+	  //fileOptionsPanel.setMinimumSize(new Dimension(150, getHeight()));
     }
 
+    /**
+     * Adds all components to the frame and organizes them in the layout.
+     */
+    private void layoutComponents()
+    {
+	  GridBagConstraints gbc = new GridBagConstraints();
+	  // Common settings for all components
+	  gbc.fill = GridBagConstraints.BOTH; // Make the component fill its display area horizontally
+	  gbc.anchor = GridBagConstraints.CENTER;
+	  gbc.insets = new Insets(5, 5, 5, 5);
+	  gbc.weighty = 1.0;
+	  gbc.gridx = 0;
+	  gbc.weightx = 0.25;
+	  add(scrollPane, gbc);
+	  gbc.gridx = 1;
+	  gbc.weightx = 0.6;
+	  add(generatePanel, gbc);
+	  gbc.gridx = 2;
+	  gbc.weightx = 0.15;
+	  add(fileOptionsPanel, gbc);
+	  pack();
+    }
     /**
      * Sets the label for the file name.
      *
@@ -99,7 +116,7 @@ public class MainFrame extends JFrame implements Observer
     public void setControlPanelOptions(Session session)
     {
 	  controlPanel.setOptions(session.getAsModel());
-	  outputArea.setText(session.getStory());
+	  generatePanel.setOutputText(session.getStory());
     }
 
     /**
@@ -121,28 +138,10 @@ public class MainFrame extends JFrame implements Observer
 	  this.controller.updateModel(controlPanel.getOptions());
     }
 
-    /**
-     * Adds all components to the frame and organizes them in the layout.
-     */
-    private void layoutComponents()
-    {
-	  add(fileNameLabel, BorderLayout.NORTH);
-	  add(scrollPane, BorderLayout.WEST);
-	  add(outputArea, BorderLayout.CENTER);
-	  add(fileOptionsPanel, BorderLayout.EAST);
-	  add(generatePanel, BorderLayout.SOUTH);
-	  pack();
-    }
-
     @Override
     public void update(Observable o, Object arg)
     {
-	  outputArea.setText(controller.getStory());
-    }
-
-    public void setOutputArea(String text)
-    {
-	  outputArea.setText(text);
+	  generatePanel.setOutputText(controller.getStory());
     }
 
     public MainController getControllerState()

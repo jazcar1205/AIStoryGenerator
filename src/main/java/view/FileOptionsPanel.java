@@ -39,6 +39,7 @@ public class FileOptionsPanel extends JPanel
 	  saveButton = new CustomButton("Save");
 	  loadButton = new CustomButton("Load");
 	  tagsLabel = new LabeledTextField("Tags", 3, 10);
+	  setMinimumSize(new Dimension((int)loadButton.getPreferredSize().getWidth(), getHeight()));
 	  addTags = new CustomButton("Add Tags");
 	  add(Box.createRigidArea(new Dimension(0,20)));
 	  saveButton.addActionListener(e -> {
@@ -46,8 +47,11 @@ public class FileOptionsPanel extends JPanel
 		sd.setVisible(true);
 		//System.out.println("File name" + this.fileName);
 		//need save actions from session.
-		sessionManager.saveSession(parent.getUpdatedSession(), sd.getFileName());
-		this.parent.setFileNameLabel(sd.getFileName());
+		if(!sd.getFileName().isEmpty())
+		{
+		    sessionManager.saveSession(parent.getUpdatedSession(), sd.getFileName());
+		    this.parent.setFileNameLabel(sd.getFileName());
+		}
 		sd.setVisible(false);
 	  });
 	  add(saveButton);

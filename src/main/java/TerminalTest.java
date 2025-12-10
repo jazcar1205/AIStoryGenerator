@@ -179,7 +179,7 @@ public class TerminalTest {
                 case "1" -> {
                     System.out.print("Enter prompt: ");
                     String prompt = scanner.nextLine().trim();
-                    controller.generateStory(prompt);
+                    controller.generateStory();
                     System.out.println("Generating......");
                     // Temporary wait for async generation
                     try { Thread.sleep(6000); } catch (InterruptedException ignored) {}
