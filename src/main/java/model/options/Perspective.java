@@ -1,4 +1,4 @@
-package model;
+package model.options;
 /**
  * enum for Perspective options.
  */

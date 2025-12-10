@@ -1,8 +1,8 @@
 package persistence;
 
-import model.Complexity;
-import model.Length;
-import model.StrategyType;
+import model.options.Complexity;
+import model.options.Length;
+import model.options.StrategyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,4 +1,4 @@
-package model;
+package model.options;
 
 /**
  * Provides options for the genre/strategy.

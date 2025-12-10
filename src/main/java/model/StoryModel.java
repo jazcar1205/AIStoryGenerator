@@ -1,5 +1,6 @@
 package model;
 
+import model.options.*;
 import persistence.Session;
 
 import java.util.ArrayList;

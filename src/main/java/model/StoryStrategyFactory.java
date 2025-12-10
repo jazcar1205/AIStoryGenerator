@@ -1,5 +1,6 @@
 package model;
 
+import model.options.StrategyType;
 import model.strategies.*;
 import service.OpenAIService;
 

@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import model.options.StrategyType;
 import model.strategies.StoryStrategy;
 import persistence.Session;
 import service.APIErrorHandler;

@@ -1,9 +1,9 @@
 package view;
 
-import model.Complexity;
-import model.Length;
+import model.options.Complexity;
+import model.options.Length;
 import model.StoryModel;
-import model.StrategyType;
+import model.options.StrategyType;
 import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 

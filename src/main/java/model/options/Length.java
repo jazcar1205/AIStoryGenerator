@@ -1,4 +1,4 @@
-package model;
+package model.options;
 
 /**
  * Provides the options for the length.

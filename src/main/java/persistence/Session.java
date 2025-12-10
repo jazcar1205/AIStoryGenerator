@@ -1,5 +1,6 @@
 package persistence;
 import model.*;
+import model.options.*;
 
 /**
  * Represents the current session.

@@ -1,5 +1,8 @@
 package model;
 
+import model.options.Complexity;
+import model.options.Length;
+import model.options.StrategyType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

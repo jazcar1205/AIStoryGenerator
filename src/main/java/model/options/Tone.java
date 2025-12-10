@@ -1,4 +1,4 @@
-package model;
+package model.options;
 
 public class Tone {
     private String tone;

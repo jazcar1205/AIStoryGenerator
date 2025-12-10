@@ -1,4 +1,4 @@
-package model;
+package model.options;
 
 public class World {
     private String setting;

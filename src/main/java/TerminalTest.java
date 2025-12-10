@@ -1,5 +1,6 @@
 import controller.MainController;
 import model.*;
+import model.options.*;
 import persistence.Session;
 import persistence.SessionManager;
 import service.OpenAIService;
