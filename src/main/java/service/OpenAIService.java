@@ -2,61 +2,56 @@ package service;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import persistence.ConfigLoader;
-
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.io.IOException;
+import model.APIClient;
 import java.util.function.Consumer;
 
 /**
- * Handles OpenAI API requests.
- */
+ * OpenAI Service
+ * provider of the API
+ * receives requests
+ * sends back responses
+ * */
+
 public class OpenAIService {
-    private final String API_KEY;
-    private final String MODEL = "gpt-3.5-turbo";
-    private final String API_URL = ConfigLoader.getKey("API_URL");
-    private final HttpClient client;
+
+    private static OpenAIService instance;
+    private final APIClient apiClient;
+
+    private OpenAIService() {
+        this.apiClient = APIClient.getInstance();
+    }
 
     public OpenAIService(String apiKey) {
-        this.API_KEY = apiKey;
-        this.client = HttpClient.newHttpClient();
+        this.apiClient = new APIClient(apiKey);
+    }
+
+    public static synchronized OpenAIService getInstance() {
+        if(instance == null) instance = new OpenAIService();
+        return instance;
     }
 
     public String generateText(String prompt, double temperature, int maxTokens) throws Exception {
-        JSONObject message = new JSONObject();
-        message.put("role", "user");
-        message.put("content", prompt);
 
-        JSONArray messages = new JSONArray();
-        messages.put(message);
+        JSONObject message = new JSONObject()
+                .put("role", "user")
+                .put("content", prompt);
 
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("model", MODEL);
-        requestBody.put("messages", messages);
-        requestBody.put("temperature", temperature);
-        requestBody.put("max_tokens", maxTokens);
+        JSONArray messages = new JSONArray().put(message);
 
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(API_URL))
-                .header("Content-Type", "application/json")
-                .header("Authorization", "Bearer " + API_KEY)
-                .POST(HttpRequest.BodyPublishers.ofString(requestBody.toString()))
-                .build();
+        JSONObject requestBody = new JSONObject()
+                .put("model", "gpt-3.5-turbo")
+                .put("messages", messages)
+                .put("temperature", temperature)
+                .put("max_tokens", maxTokens);
 
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        if (response.statusCode() == 200) {
-            JSONObject jsonResponse = new JSONObject(response.body());
-            return jsonResponse
-                    .getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
-        } else {
-            throw new RuntimeException("API Error: " + response.body());
-        }
+        JSONObject response = apiClient.postChat(requestBody);
+
+        return response.getJSONArray("choices")
+                .getJSONObject(0)
+                .getJSONObject("message")
+                .getString("content");
     }
 
     public void generateTextAsync(String prompt, Consumer<String> onSuccess, Consumer<Exception> onError) {

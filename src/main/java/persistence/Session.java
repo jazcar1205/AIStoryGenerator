@@ -11,6 +11,12 @@ public class Session{
     private Complexity complexity;
     private Length length;
     private StrategyType strategyType;
+    private Pace pace;
+    private Perspective pers;
+    private String timePeriod;
+    private String setting;
+    private String tone;
+    private String characters;
 
     /**
      * Default constructor with filler text.
@@ -20,6 +26,12 @@ public class Session{
         this.complexity = Complexity.CHILDFRIENDLY;
         this.length = Length.SHORT;
         this.strategyType = StrategyType.FANTASY;
+        this.pace = Pace.NORMAL;
+        this.pers = Perspective.THIRD;
+        setting = "Any";
+        tone = "Any";
+        timePeriod ="Any";
+        this.characters = "Any";
     }
 
     /**
@@ -43,6 +55,19 @@ public class Session{
         this.strategyType = storyStrategy;
     }
 
+    public Session(String story, Complexity complex, Length len, StrategyType strategy, Pace pace, Perspective pers, String timePeriod, String tone, String setting,String characters) {
+        this.story = story;
+        this.length = len;
+        this.complexity = complex;
+        this.strategyType = strategy;
+        this.pace = pace;
+        this.pers = pers;
+        this.setting = setting;
+        this.tone = tone;
+        this.timePeriod = timePeriod;
+        this.characters = characters;
+    }
+
     // Getters and setters
     public String getStory() { return story; }
     public void setStory(String story) { this.story = story; }
@@ -51,7 +76,6 @@ public class Session{
     {
         return complexity;
     }
-
     public void setComplexity(Complexity complexity)
     {
         this.complexity = complexity;
@@ -61,17 +85,33 @@ public class Session{
     {
         return length;
     }
-
     public void setLength(Length length)
     {
         this.length = length;
     }
 
+    public Pace getPace() {return pace;}
+    public void setPace(Pace pace) {this.pace = pace;}
+
+    public Perspective getPers() {return pers;}
+    public void setPers(Perspective pers) {this.pers = pers;}
+
+    public String getTimePeriod() {return timePeriod;}
+    public void setTimePeriod(String timePeriod) {this.timePeriod = timePeriod;}
+
+    public String getSetting() {return setting;}
+    public void setSetting(String setting) {this.setting = setting;}
+
+    public String getTone() {return tone;}
+    public void setTone(String tone) {this.tone = tone;}
+
+    public String getCharacters() {return characters;}
+    public void setCharacters(String characters) {this.characters = characters;}
+
     public StrategyType getStoryStrategy()
     {
         return strategyType;
     }
-
     public void setStoryStrategy(StrategyType strategyType)
     {
         this.strategyType = strategyType;
@@ -79,7 +119,7 @@ public class Session{
 
     public StoryModel getAsModel()
     {
-        return new StoryModel(this.story, this.length, this.complexity, this.strategyType);
+        return new StoryModel(this.story, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
     }
 
     @Override
@@ -90,6 +130,12 @@ public class Session{
                 ", complexity=" + complexity +
                 ", length=" + length +
                 ", strategyType=" + strategyType +
+                ", pace=" + pace +
+                ", time period=" + timePeriod +
+                ", tone=" + tone +
+                ", perspective=" + pers +
+                ", setting=" + setting +
+                ", characters=" + characters +
                 '}';
     }
 }

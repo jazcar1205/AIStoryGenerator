@@ -22,15 +22,21 @@ Strategy and Factory allow easy switching between story genres, Observer keeps t
 **Problem:** Unexpected API failures caused crashes.
 **Solution:** we built a unified error handler to manage and display errors safely.
 
-### Challenge 3: [Your challenge]
-We struggled with genre switching at first, but refactoring to Strategy made it simple and consistent.
-
 ## Testing Strategy
 Describe your testing approach and coverage.
 
+## API Usage & Costs
+- Model used: gpt-3.5-turbo
+- Estimated cost per request: $0.002
+- Cost management strategies
+    - Using a Low-Cost Model
+    - Setting max_tokens Limit
+    - Singleton Pattern for API Client
+    - Asynchronous Execution
+  
 ## AI/LLM Usage Disclosure
 **Did you use AI tools (ChatGPT, Copilot, etc.)?**
-- [ ] Yes - Describe how and what
+- [] Yes - Describe how and what
 - [x] No
 
 If yes, explain:
@@ -38,13 +44,6 @@ If yes, explain:
 - What you asked them to do
 - How you verified/modified the output
 - What you learned from the process
-
-## Time Breakdown
-- Design & Planning: 2 hours
-- Implementation: 20 hours
-- Testing: 1 hours
-- Documentation: 2 hours
-- Total: 23 hours Currently 
 
 ## What We Learned
 - OOP concept reinforced

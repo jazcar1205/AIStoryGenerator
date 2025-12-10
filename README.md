@@ -5,7 +5,8 @@
 - Cedar Hudgens 
 
 ## Demo Link
-https://www.youtube.com/watch?v=kytr02STaDs
+- Check in https://www.youtube.com/watch?v=kytr02STaDs
+- 
 
 ## Project Description
 The Interactive Storytelling Application uses AI to create stories based on what the user writes or chooses. Users can pick a genre, make characters, and shape the world of their story. The app can build different types of stories and let users save or export them.
@@ -15,6 +16,10 @@ The Interactive Storytelling Application uses AI to create stories based on what
 - [x] Save / export stories
 - [x] Length Selection (Short, Medium, Long)
 - [x] Complexity selection (Child friendly, Average, Difficult)
+- [x] Pace selection (Slow, Normal, Fast)
+- [x] Perspective selection (1st or 3rd)
+- [x] Added Prompts for Setting, Tone, Time Period
+- [x] Ability to ask for specific characters
 
 ## Design Patterns Used
 1. **Strategy Pattern** - Multiple story generation strategies. 
@@ -22,8 +27,11 @@ The Interactive Storytelling Application uses AI to create stories based on what
 2. **Factory Pattern** - Centralizes the creation of StoryStrategy objects based on the user's selected genre (e.g., automatically creates a FantasyStrategy instance when 'Fantasy' is chosen).
 3. **Observer Pattern** - Ui updates when story and/ or model changes
 3. **Singleton Pattern** - Configuration manager or API rate limiter
-## Setup Instructions
 
+## Setup Instructions
+1. Get API key from [website]
+2. export API_KEY="your-key"   # or set in config.properties
+3. 
 ### Prerequisites
 - Java 11 or higher
 - Dependencies:
@@ -45,17 +53,6 @@ The Interactive Storytelling Application uses AI to create stories based on what
 - org.json (20231013)
 - JUnit 4.13
 
-## Usage Guide
-Step-by-step instructions with screenshots.
-
-## API Usage & Costs
-- Model used: gpt-3.5-turbo
-- Estimated cost per request: $0.002
-- Cost management strategies
-  - Using a Low-Cost Model
-  - Setting max_tokens Limit
-  - Singleton Pattern for API Client
-  - Asynchronous Execution
 
 ## Known Issues
 - The use of the API Client and connecting to the controller : Code Has been Fixed 

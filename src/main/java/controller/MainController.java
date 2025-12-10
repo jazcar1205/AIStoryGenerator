@@ -84,7 +84,7 @@ public class MainController {
             try {
                 if (strategy != null) {
                     // Synchronous generation.
-                    String story = strategy.generateStory(prompt, model.getLength(), model.getComplexity());
+                    String story = strategy.generateStory(prompt, model.getLength(), model.getComplexity(), model.getSetting(), model.getTone(), model.getTimePeriod(), model.getPace(),model.getPers(),model.getCharacters());
                     return story;
                 }else
                 {

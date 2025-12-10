@@ -1,15 +1,16 @@
 package model;
 
 import okhttp3.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.ConfigLoader;
-
 import java.io.IOException;
 
 /**
  * Singleton OpenAI client
- */
+ * User of the API
+ * Sends the requests
+* */
+
 public class APIClient {
     private static APIClient instance = null;
     private static final String API_URL = ConfigLoader.getKey("API_URL");
@@ -21,27 +22,18 @@ public class APIClient {
         apiKey = ConfigLoader.getKey("OPENAI_API_KEY");
     }
 
+    public APIClient(String apiKey) {
+        client = new OkHttpClient();
+        this.apiKey = apiKey;
+    }
+
     public static synchronized APIClient getInstance() {
         if(instance == null) {
             instance = new APIClient();
         }
         return instance;
     }
-
-    public String generateStory(String prompt) throws IOException {
-        JSONObject message = new JSONObject();
-        message.put("role", "user");
-        message.put("content", prompt);
-
-        JSONArray messages = new JSONArray();
-        messages.put(message);
-
-        JSONObject requestBody = new JSONObject();
-        requestBody.put("model", "gpt-3.5-turbo");
-        requestBody.put("messages", messages);
-        requestBody.put("temperature", 0.7);
-        requestBody.put("max_tokens", 500);
-
+    public JSONObject postChat(JSONObject requestBody) throws IOException {
         RequestBody body = RequestBody.create(
                 requestBody.toString(),
                 MediaType.parse("application/json")
@@ -53,30 +45,14 @@ public class APIClient {
                 .post(body)
                 .build();
 
-        try (Response response = client.newCall(request).execute()) {
-            if (!response.isSuccessful()) {
-                throw new IOException("API Error: " + response.code() + " - " + response.message());
+        try(Response response = client.newCall(request).execute()) {
+            if(!response.isSuccessful()) {
+                throw new IOException("OpenAI API Error: " + response.code());
             }
+
             String respBody = response.body().string();
-            JSONObject jsonResponse = new JSONObject(respBody);
-            return jsonResponse
-                    .getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .getString("content");
+            return new JSONObject(respBody);
         }
     }
-
-    public void generateStoryAsync(String prompt,
-                                   java.util.function.Consumer<String> onSuccess,
-                                   java.util.function.Consumer<Exception> onError) {
-        new Thread(() -> {
-            try {
-                String story = generateStory(prompt);
-                onSuccess.accept(story);
-            } catch (Exception e) {
-                onError.accept(e);
-            }
-        }).start();
-    }
 }
+
