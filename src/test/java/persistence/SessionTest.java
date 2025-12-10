@@ -1,5 +1,6 @@
 package persistence;
 
+import model.StoryModel;
 import model.options.Complexity;
 import model.options.Length;
 import model.options.StrategyType;
@@ -69,8 +70,13 @@ class SessionTest
     }
 
     @Test
-    void testToString()
+    void getAsModel()
     {
-
+	  StoryModel model = session.getAsModel();
+	  assertNotNull(model);
+	  assertEquals("Filler text", model.getStory());
+	  assertEquals(Complexity.CHILDFRIENDLY, model.getComplexity());
+	  assertEquals(Length.SHORT, model.getLength());
+	  assertEquals(StrategyType.FANTASY, model.getStrategy());
     }
 }
