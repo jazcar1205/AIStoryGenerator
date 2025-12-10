@@ -27,7 +27,7 @@ public class GeneratePanel extends JPanel
 	  add(blank, gbc);
 	  //setting up generate button to take up 70% of the space
 	  generateButton = new CustomButton("Generate");
-	  generateButton.addActionListener(e -> onGenerate());
+	  generateButton.addActionListener(e -> fakeGenerate());
 	  gbc.gridx = 1;
 	  gbc.weightx = 0.5;
 	  add(generateButton, gbc);
@@ -48,6 +48,7 @@ public class GeneratePanel extends JPanel
 
     private void fakeGenerate()
     {
+	  parent.updateModel();
 	  parent.setOutputArea(parent.getControllerState().generateStoryDummy());
     }
     /**

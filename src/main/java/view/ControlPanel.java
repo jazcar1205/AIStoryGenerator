@@ -1,9 +1,7 @@
 package view;
 
-import model.options.Complexity;
-import model.options.Length;
+import model.options.*;
 import model.StoryModel;
-import model.options.StrategyType;
 import view.components.LabeledComboBox;
 import view.components.LabeledTextField;
 
@@ -45,7 +43,7 @@ public class ControlPanel extends JPanel
 		    new String[] {"ANY", "Child Friendly", "Average", "Complex"});
 	  genreField = new LabeledComboBox("Genre ", new String[]{"ANY", "Fantasy", "Horror", "Romance", "SciFi"});
 	  paceField = new LabeledComboBox("Development Pace", new String[]{"ANY", "Slow", "Normal", "Fast"});
-	  persepctiveField = new LabeledComboBox("Perspective ", new String[]{"ANY","1st", "3rd"});
+	  persepctiveField = new LabeledComboBox("Perspective ", new String[]{"ANY","First", "Third"});
 	  promptField = new LabeledTextField("Prompt Keywords", 5, 30);
 	  toneField = new LabeledTextField("Tone ", 5,30);
 	  characterField = new LabeledTextField("Characters ", 10,30);
@@ -89,9 +87,17 @@ public class ControlPanel extends JPanel
      */
     public void setOptions(StoryModel model)
     {
+	  //String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters
 	  lengthField.setSelection(model.getLength().toString());
+	  promptField.setText(model.getPromptKeyWords());
 	  complexityField.setSelection(model.getComplexity().toString());
 	  genreField.setSelection(model.getStrategy().toString());
+	  settingField.setText(model.getSetting());
+	  timePeriodField.setText(model.getTimePeriod());
+	  toneField.setText(model.getTone().getTone());
+	  paceField.setSelection(model.getStrategy().toString());
+	  persepctiveField.setSelection(model.getStrategy().toString());
+	  characterField.setText(model.getCharacters().getCharacters());
     }
 
     /**
@@ -100,10 +106,18 @@ public class ControlPanel extends JPanel
      */
     public StoryModel getOptions()
     {
-	  //need to update with more model fields.
-	  return new StoryModel(Length.getLength(lengthField.getSelection()),
+	  //String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters
+	  return new StoryModel(
+		    promptField.getText(),
+		    Length.getLength(lengthField.getSelection()),
 		    Complexity.getComplexity(complexityField.getSelection()),
-		    StrategyType.getStrat(genreField.getSelection())
+		    StrategyType.getStrat(genreField.getSelection()),
+		    settingField.getText(),
+		    toneField.getText(),
+		    timePeriodField.getText(),
+		    Pace.getPace(paceField.getSelection()),
+		    Perspective.getPers(persepctiveField.getSelection()),
+		    characterField.getText()
 	  );
     }
 
@@ -115,6 +129,7 @@ public class ControlPanel extends JPanel
     public String getValues()
     {
 	  StringBuilder values = new StringBuilder();
+	  values.append("Prompt: " + promptField.getText() + "\n");
 	  values.append("Length: " + lengthField.getSelection());
 	  values.append("\nComplexity: " + complexityField.getSelection());
 	  values.append("\nGenre: " + genreField.getSelection());

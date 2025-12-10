@@ -149,7 +149,7 @@ public class TerminalTest {
         model.setTone(style);
         model.setPace(pace);
         model.setPerspective(perspective);
-        model.setCharacters(characters.getCharacters());
+        model.setCharacters(characters);
 
         System.out.println("\n--------------------------------------------------------------------\n");
 
