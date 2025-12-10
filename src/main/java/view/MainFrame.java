@@ -16,7 +16,7 @@ import controller.MainController;
  */
 public class MainFrame extends JFrame implements Observer
 {
-    private JLabel fileNameLabel;
+
     private JScrollPane scrollPane;
     private GeneratePanel generatePanel;
     private ControlPanel controlPanel;
@@ -59,12 +59,8 @@ public class MainFrame extends JFrame implements Observer
      */
     private void initComponents()
     {
-	  fileNameLabel = new JLabel("Untitled.txt");
-	  fileNameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-
 	  generatePanel = new GeneratePanel(this);
 	  //generatePanel.setPreferredSize(new Dimension(0, getHeight()));
-
 	  controlPanel = new ControlPanel();
 	  //controlPanel.setMinimumSize(new Dimension(100, 0));
 	  scrollPane = new JScrollPane(controlPanel);
@@ -85,8 +81,8 @@ public class MainFrame extends JFrame implements Observer
 	  gbc.fill = GridBagConstraints.BOTH; // Make the component fill its display area horizontally
 	  gbc.anchor = GridBagConstraints.CENTER;
 	  gbc.insets = new Insets(5, 5, 5, 5);
-	  gbc.weighty = 1.0;
 	  gbc.gridx = 0;
+	  gbc.weighty = 1.0;
 	  gbc.weightx = 0.25;
 	  add(scrollPane, gbc);
 	  gbc.gridx = 1;
@@ -96,15 +92,6 @@ public class MainFrame extends JFrame implements Observer
 	  gbc.weightx = 0.15;
 	  add(fileOptionsPanel, gbc);
 	  pack();
-    }
-    /**
-     * Sets the label for the file name.
-     *
-     * @param fileNameLabel
-     */
-    public void setFileNameLabel(String fileNameLabel)
-    {
-	  this.fileNameLabel.setText(fileNameLabel);
     }
 
     /**
