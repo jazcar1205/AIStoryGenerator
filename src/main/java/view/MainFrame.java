@@ -69,7 +69,7 @@ public class MainFrame extends JFrame implements Observer
 
 	  generateButton = new CustomButton("Generate");
 	  generateButton.setSize(50, 50);
-	  generateButton.addActionListener(e -> onGenerate());
+	  generateButton.addActionListener(e -> fakeGenerate());
 
 	  controlPanel = new ControlPanel();
 	  controlPanel.setSize((int) (getWidth() - (getWidth() * 0.40)), getHeight() - 50);
@@ -141,6 +141,10 @@ public class MainFrame extends JFrame implements Observer
 	  outputArea.setText(controller.getStory());
     }
 
+    private void fakeGenerate()
+    {
+	  outputArea.setText(controller.generateStoryDummy());
+    }
     /**
      * Used to send info to the API to generate text.
      */
