@@ -49,4 +49,14 @@ If yes, explain:
 - OOP concept reinforced
 - API integration insights
 - Design pattern understanding
+## Known Issues
+- The use of the API Client and connecting to the controller : Code Has been Fixed
+- Silent Failure in Terminal: Rerun the program and make sure the API Key is correct
+
+## Future Enhancements
+- Implementation of Images
+- More Customization to the Story
+  - Style
+  - Setting
+  - Tags
 

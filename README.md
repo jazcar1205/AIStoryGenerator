@@ -5,8 +5,8 @@
 - Cedar Hudgens 
 
 ## Demo Link
-- Check in https://www.youtube.com/watch?v=kytr02STaDs
-- 
+- Check in: https://www.youtube.com/watch?v=kytr02STaDs
+- Final Demo: 
 
 ## Project Description
 The Interactive Storytelling Application uses AI to create stories based on what the user writes or chooses. Users can pick a genre, make characters, and shape the world of their story. The app can build different types of stories and let users save or export them.
@@ -20,6 +20,7 @@ The Interactive Storytelling Application uses AI to create stories based on what
 - [x] Perspective selection (1st or 3rd)
 - [x] Added Prompts for Setting, Tone, Time Period
 - [x] Ability to ask for specific characters
+- [x] Fully functional GUI
 
 ## Design Patterns Used
 1. **Strategy Pattern** - Multiple story generation strategies. 
@@ -29,38 +30,28 @@ The Interactive Storytelling Application uses AI to create stories based on what
 3. **Singleton Pattern** - Configuration manager or API rate limiter
 
 ## Setup Instructions
-1. Get API key from [website]
-2. export API_KEY="your-key"   # or set in config.properties
-3. 
+1. Get API key from Open API
+2. Update "sample.config.properties" with the API key and API URL. 
+3. Change name to "config.properties"
+
 ### Prerequisites
 - Java 11 or higher
 - Dependencies:
   - org.json (20231013)
+  - okhttp 4.12.0
   - JUnit 4.13 (unit tests)
+  - Mockito 5.21.0 (unit tests)
 - OpenAI API key
 
 ### Installation (Intellij - Terminal)
 1. Clone repository
+2. Edit sample.config.properties as described above.
 2. Go To main.java.TerminalTest
 3. Run  the current file
 
 ### Installation (Intellij - GUI) 
 1. Clone repository
+2. Edit sample.config.properties as described above.
 2. Go To main.java.Main
 3. Run  the current file
 
-### Dependencies
-- org.json (20231013)
-- JUnit 4.13
-
-
-## Known Issues
-- The use of the API Client and connecting to the controller : Code Has been Fixed 
-- Silent Failure in Terminal: Rerun the program and make sure the API Key is correct
-
-## Future Enhancements
-- Implementation of Images
-- More Customization to the Story
-  - Style
-  - Setting
-  - Tags
