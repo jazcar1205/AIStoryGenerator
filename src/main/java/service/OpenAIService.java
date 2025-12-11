@@ -26,11 +26,24 @@ public class OpenAIService {
         this.apiClient = new APIClient(apiKey);
     }
 
+    /**
+     * Ensures that the service is a singleton. Only one service can exist.
+     * @return
+     */
     public static synchronized OpenAIService getInstance() {
         if(instance == null) instance = new OpenAIService();
         return instance;
     }
 
+    /**
+     * Uses the client to send a request to the API
+     * and returns the request provided.
+     * @param prompt
+     * @param temperature
+     * @param maxTokens
+     * @return
+     * @throws Exception
+     */
     public String generateText(String prompt, double temperature, int maxTokens) throws Exception {
 
         JSONObject message = new JSONObject()
@@ -54,6 +67,12 @@ public class OpenAIService {
                 .getString("content");
     }
 
+    /**
+     * For asyncronous generation.
+     * @param prompt
+     * @param onSuccess
+     * @param onError
+     */
     public void generateTextAsync(String prompt, Consumer<String> onSuccess, Consumer<Exception> onError) {
         new Thread(() -> {
             try {

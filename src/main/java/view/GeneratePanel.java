@@ -5,6 +5,9 @@ import view.components.CustomButton;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * A panel containing the buttons for generation and the ouput area.
+ */
 public class GeneratePanel extends JPanel
 {
     private final MainFrame parent;
@@ -52,6 +55,10 @@ public class GeneratePanel extends JPanel
     {
 	  outputArea.setText(text);
     }
+
+    /**
+     * Used to stop a generate task that is currently running.
+     */
     private void cancelRequest()
     {
 	  System.out.println("Cancel Request");

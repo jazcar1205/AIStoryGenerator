@@ -17,22 +17,41 @@ public class APIClient {
     private final OkHttpClient client;
     private final String apiKey;
 
+    /**
+     * Automatically loads key from config.properties.
+     */
     private APIClient() {
         client = new OkHttpClient();
         apiKey = ConfigLoader.getKey("OPENAI_API_KEY");
     }
 
+    /**
+     *
+     * @param apiKey Open AI API key.
+     */
     public APIClient(String apiKey) {
         client = new OkHttpClient();
         this.apiKey = apiKey;
     }
 
+    /**
+     * Ensures client is a singleton
+     * Only one client can exist at a time.
+     * @return
+     */
     public static synchronized APIClient getInstance() {
         if(instance == null) {
             instance = new APIClient();
         }
         return instance;
     }
+
+    /**
+     * Send request to API.
+     * @param requestBody What to send to the API
+     * @return
+     * @throws IOException
+     */
     public JSONObject postChat(JSONObject requestBody) throws IOException {
         RequestBody body = RequestBody.create(
                 requestBody.toString(),

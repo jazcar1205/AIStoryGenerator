@@ -1,5 +1,8 @@
 package service;
 
+/**
+ * Creates a message for every potential API issue faced.
+ */
 public class APIErrorHandler {
     public static String handleError(Exception e) {
         String msg = e.getMessage();

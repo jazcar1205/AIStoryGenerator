@@ -91,7 +91,7 @@ public class FileOptionsPanel extends JPanel
     }
 
     /**
-     * Reads the tags written in the tags field.
+     * Reads the tags written in the tags field. -- currently not in use
      */
     private void readTags()
     {

@@ -7,7 +7,6 @@ import view.MainFrame;
 
 public class Main {
     public static void main(String[] args) {
-        // Initialize model
         StoryModel model = new StoryModel();
         OpenAIService service = new OpenAIService(ConfigLoader.getKey("OPENAI_API_KEY"));
         MainController controller = new MainController(model, service);

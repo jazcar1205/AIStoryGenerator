@@ -17,6 +17,10 @@ public class StoryModel extends Observable
     private String promptKeyWords;
     private StrategyType strategy;
 
+    /**
+     * Generic constructor for story model.
+     * Sets everything to its default state.
+     */
     public StoryModel() {
         this.story = "";
         this.promptKeyWords = "";
@@ -37,6 +41,19 @@ public class StoryModel extends Observable
         this.strategy = strategy;
     }
 
+    /**
+     * Does not set story.
+     * @param prompt
+     * @param len
+     * @param complex
+     * @param strategy
+     * @param setting
+     * @param tone
+     * @param timePeriod
+     * @param pace
+     * @param pers
+     * @param characters
+     */
     public StoryModel(String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
     {
         this.promptKeyWords = prompt;
@@ -50,6 +67,20 @@ public class StoryModel extends Observable
         this.characters = new Characters(characters);
     }
 
+    /**
+     * Does set story.
+     * @param story
+     * @param prompt
+     * @param len
+     * @param complex
+     * @param strategy
+     * @param setting
+     * @param tone
+     * @param timePeriod
+     * @param pace
+     * @param pers
+     * @param characters
+     */
     public StoryModel(String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
     {
         this.story = story;
@@ -134,7 +165,15 @@ public class StoryModel extends Observable
     public String getSetting() {return world.getSetting();}
     public Characters getCharacters() {return characters;}
 
-    public Session getAsSession() { return new Session(story, promptKeyWords,complex, len, strategy, pace, pers,world,tone,characters);}
+    /**
+     * Returns the model as a session, which is essentially an immutable model
+     * that can then be saved. 
+     * @return model represented with a session
+     */
+    public Session getAsSession()
+    {
+        return new Session(story, promptKeyWords,complex, len, strategy, pace, pers,world,tone,characters);
+    }
     @Override
     public String toString()
     {

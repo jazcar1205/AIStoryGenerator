@@ -15,6 +15,9 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+/**
+ * Controls the operations for generation
+ */
 public class MainController {
 
     private StoryModel model;
@@ -22,6 +25,11 @@ public class MainController {
     private final OpenAIService service;
     private final ExecutorService executor;
 
+    /**
+     * Creates a main controller. Starts up executor thread.
+     * @param model
+     * @param service
+     */
     public MainController(StoryModel model, OpenAIService service) {
         this.model = model;
         this.service = service;
@@ -29,23 +37,39 @@ public class MainController {
         this.executor = Executors.newSingleThreadExecutor(); // Single-threaded executor
     }
 
+    /**
+     * Sets the strategy in the model and locally.
+     * @param strategy
+     */
     public void setStrategy(StoryStrategy strategy)
     {
         this.model.setStrategy(strategy.getStrategyType());
         this.strategy = strategy;
     }
 
+    /**
+     * Sets the strategy in the model and locally.
+     * @param strategy
+     */
     public void setStrategy(StrategyType strategy)
     {
         this.model.setStrategy(strategy);
         this.strategy = StoryStrategyFactory.getStrategy(strategy, service);
     }
 
+    /**
+     * Used for when you do not want to call the full story generation
+     * @return
+     */
     public String generateStoryDummy()
     {
         return model.toString();
     }
 
+    /**
+     * Updates the model. Does not create a new object to keep observers.
+     * @param model
+     */
     public void updateModel(StoryModel model)
     {
         //String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters
@@ -72,6 +96,10 @@ public class MainController {
         return model.getAsSession();
     }
 
+    /**
+     * Attaches observer to the model, not to the controller.
+     * @param observer
+     */
     public void attachObserver(Observer observer)
     {
         model.addObserver(observer);
@@ -97,7 +125,7 @@ public class MainController {
                     return story;
                 }else
                 {
-                    System.out.println("No strategy selected?");
+                    System.err.println("No strategy selected.");
                     return null;
                 }
             } catch (Exception e) {
@@ -110,7 +138,7 @@ public class MainController {
         //After generation is complete, we need to get the "Future".
         try {
             String storyResult = storyFuture.get(); // Will block thread from moving on until this is completed.
-            System.out.println("Story successfully generated and retrieved from Future.");
+            //System.out.println("Story successfully generated and retrieved from Future.");
             model.setStory(storyResult);
             return storyResult;
         } catch (InterruptedException | ExecutionException e) {

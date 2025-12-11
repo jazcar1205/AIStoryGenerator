@@ -121,6 +121,10 @@ public class Session{
         this.strategyType = strategyType;
     }
 
+    /**
+     * Get the session as a model.
+     * @return
+     */
     public StoryModel getAsModel()
     {
         return new StoryModel(this.story, this.promptKeyWords, this.length, this.complexity, this.strategyType, this.setting, this.tone, this.timePeriod, this.pace, this.pers, this.characters);
