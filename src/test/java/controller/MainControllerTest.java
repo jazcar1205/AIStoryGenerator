@@ -1,10 +1,10 @@
 package controller;
 
 import model.StoryModel;
+import model.options.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import persistence.Session;
 import service.OpenAIService;
 import static org.mockito.Mockito.*;
 
@@ -33,13 +33,41 @@ class MainControllerTest
     }
 
     @Test
-    void setStrategy()
+    void setStrategyTest()
     {
-
+        controller.setStrategy(StrategyType.FANTASY);
+        Session session = controller.getSession();
+        assertEquals(StrategyType.FANTASY, session.getStrategyType());
+        controller.generateStory();
+        assertEquals("Responding to: [Length: Any, Complexity: Any, Setting: Any, Tone: Any, Time Period: Any, Pace: Any, Perspective: Any, Characters: Any, fantasy story: ]",
+                controller.getStory());
     }
 
     @Test
-    void generateStory()
+    void updateModelPassModelTest()
+    {
+        //String story, String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters
+        StoryModel model = new StoryModel("Test", "prompt", Length.SHORT, Complexity.CHILDFRIENDLY,
+                StrategyType.FANTASY, "setting", "tone", "time period", Pace.FAST,
+                Perspective.FIRST, "characters");
+
+        controller.updateModel(model);
+        assertNotEquals("Test", controller.getStory());
+        Session session = controller.getSession();
+        assertEquals("prompt", session.getPromptKeyWords());
+        assertEquals(Length.SHORT, session.getLength());
+        assertEquals(Complexity.CHILDFRIENDLY, session.getComplexity());
+        assertEquals(StrategyType.FANTASY, session.getStrategyType());
+        assertEquals("setting", session.getSetting());
+        assertEquals("tone", session.getTone());
+        assertEquals("time period", session.getTimePeriod());
+        assertEquals(Pace.FAST, session.getPace());
+        assertEquals(Perspective.FIRST, session.getPers());
+        assertEquals("characters", session.getCharacters());
+    }
+
+    @Test
+    void generateStoryTest()
     {
         //was able to reveal that there was a slight mismatch in the order of
         //setting the service in controller and passing it to the strategy.

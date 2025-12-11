@@ -37,19 +37,6 @@ public class StoryModel extends Observable
         this.strategy = strategy;
     }
 
-    public StoryModel(String story, Length len, Complexity complex, StrategyType strategy,World world, Tone tone,Pace pace, Perspective pers, Characters characters)
-    {
-        this.story = story;
-        this.len = len;
-        this.complex = complex;
-        this.strategy = strategy;
-        this.pace = pace;
-        this.pers = pers;
-        this.world = world;
-        this.tone = tone;
-        this.characters = characters;
-    }
-
     public StoryModel(String prompt, Length len, Complexity complex, StrategyType strategy,String setting, String tone, String timePeriod, Pace pace, Perspective pers, String characters)
     {
         this.promptKeyWords = prompt;
