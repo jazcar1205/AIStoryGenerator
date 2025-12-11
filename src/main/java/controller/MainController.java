@@ -105,6 +105,11 @@ public class MainController {
         model.addObserver(observer);
     }
 
+    public void Cancel(){
+        System.out.println("Options entry cancelled.");
+        model.resetTemporaryOptions();
+    }
+
     /**
      * Generates a story using the selected strategy.
      *
