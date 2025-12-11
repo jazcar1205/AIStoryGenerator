@@ -24,8 +24,8 @@ public class MainController {
 
     public MainController(StoryModel model, OpenAIService service) {
         this.model = model;
-        setStrategy(model.getStrategy());
         this.service = service;
+        setStrategy(model.getStrategy());
         this.executor = Executors.newSingleThreadExecutor(); // Single-threaded executor
     }
 
