@@ -35,6 +35,8 @@ public class OpenAIService {
         return instance;
     }
 
+    public void cancelGeneration(){apiClient.cancel();}
+
     /**
      * Uses the client to send a request to the API
      * and returns the request provided.

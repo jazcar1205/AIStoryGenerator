@@ -17,6 +17,7 @@ public class APIClient {
     private final OkHttpClient client;
     private final String apiKey;
 
+    private Call activeCall;
     /**
      * Automatically loads key from config.properties.
      */
@@ -47,6 +48,18 @@ public class APIClient {
     }
 
     /**
+     * Allows UI and service to cancel the Api request
+     */
+    public void cancel(){
+        System.out.println("Active Call is "+activeCall);
+        if (activeCall != null && ! activeCall.isCanceled()){
+            System.out.println("Active Call is canceling");
+            activeCall.cancel();
+        }
+    }
+
+
+    /**
      * Send request to API.
      * @param requestBody What to send to the API
      * @return
@@ -64,7 +77,9 @@ public class APIClient {
                 .post(body)
                 .build();
 
-        try(Response response = client.newCall(request).execute()) {
+        activeCall = client.newCall(request);
+
+        try(Response response = activeCall.execute()) {
             if(!response.isSuccessful()) {
                 throw new IOException("OpenAI API Error: " + response.code());
             }

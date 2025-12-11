@@ -61,7 +61,11 @@ public class GeneratePanel extends JPanel
      */
     private void cancelRequest()
     {
-	  System.out.println("Cancel Request");
+
+        System.out.println("Cancel Request");
+        parent.getControllerState().cancelRequest();
+
+
     }
 
     private void fakeGenerate()

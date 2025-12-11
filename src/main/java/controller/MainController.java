@@ -105,9 +105,9 @@ public class MainController {
         model.addObserver(observer);
     }
 
-    public void Cancel(){
+    public void cancelRequest(){
         System.out.println("Options entry cancelled.");
-        model.resetTemporaryOptions();
+        service.cancelGeneration();
     }
 
     /**
