@@ -1,31 +1,62 @@
 # Project Report
 
+## Time Spent
+For full completion of this project (from assignment #3 to this one) we have 
+probably spent about 60 hours or so. 
+
 ## Design Decisions
 
 ### Architecture Overview
-We used an MVC structure to keep the model, UI, and controller logic separate and clean. Design patterns like Strategy, Factory, Observer, and Singleton helped make the system flexible and easy to maintain.
+We used an MVC structure to keep the model, UI, and controller logic separate and clean. 
+Design patterns like Strategy, Factory, Observer, and Singleton helped make the system flexible and easy to maintain.
 
 ### API Integration Strategy
-All API calls run asynchronously so the UI never freezes, and we handle errors and rate limits using retries and centralized error handling.
+All API calls run asynchronously so the UI never freezes, 
+and we handle errors and rate limits using retries and centralized error handling.
 
 ### Design Pattern Justifications
-Strategy and Factory allow easy switching between story genres, Observer keeps the UI updated automatically, and Singleton ensures only one API service instance manages all requests.
+**Strategy**: We needed different AI behaviors according to what genre the story should
+be created with. 
+
+**Factory**: allow easy switching between story genres, 
+
+**Observer**: the UI is an observer of the story model, so each time
+the model's story changes, the UI changes accordingly. While there is a manual setup
+for this as well, the UI will always update.
+
+**Singleton**: This is implemeneted in the API Client and service to ensure only one API service
+instance manages all requests.
 
 ## Challenges Faced
 
 ### Challenge 1: API Rate Limiting
-**Problem:** We hit rate limits during testing.
-**Solution:** We added retry logic and controlled request timing.
-**Learning:** ...
+**Problem:** We hit rate limits during testing.  
 
-### Challenge 2: Error Handling
-**Problem:** Unexpected API failures caused crashes.
-**Solution:** we built a unified error handler to manage and display errors safely.
+**Solution:** We added retry logic and controlled request timing. Additionally, 
+we were able to upgrade API tiers in order to make sure we wouldn't run into this issue in the future.
 
-## Testing Strategy
-Describe your testing approach and coverage.
+**Learned:** This project very effectively taught us how to manage a live API. Interacting with the usage
+console and creating and testing various API keys was helpful in simulating a real 
+application.
 
-## API Usage & Costs
+### Challenge 2: Mockito Dependencies
+**Problem:** Mockito was used in this project for creating a mock OpenAIService object.
+Unfortunately, we often hit issues with the dependencies. While the dependency is included in the
+pom.xml file, the import statements would still throw errors. Additionally, when we did get them to load, 
+the mock of generateText() threw an additional error indicating that additional configuration information
+needed to be added. 
+
+**Solution:** To fix the Mockito import statements, invalidating the IntelliJ cache generally helped fix it. 
+Unfortunately, this would need to be done every time a new import statement was needed. Also, for the configuration
+error we were able to add the suggested change to pom.xml. However, searching online states that this doesn't
+actually resolve the issue still. Ultimately, we ended up leaving it as is. The configuration change was not an error,
+but rather just a notification. The mocked classes will still work.  
+
+**Learned**: We were able to learn a lot more about how to troubleshoot dependency errors and how
+to setup the pom.xml file with additional information.
+
+## AI Usage
+### API Usage & Costs
 - Model used: gpt-3.5-turbo
 - Estimated cost per request: $0.002
 - Cost management strategies
@@ -34,29 +65,13 @@ Describe your testing approach and coverage.
     - Singleton Pattern for API Client
     - Asynchronous Execution
   
-## AI/LLM Usage Disclosure
-**Did you use AI tools (ChatGPT, Copilot, etc.)?**
-- [] Yes - Describe how and what
-- [x] No
-
-If yes, explain:
-- What AI tools you used
-- What you asked them to do
-- How you verified/modified the output
-- What you learned from the process
-
-## What We Learned
-- OOP concept reinforced
-- API integration insights
-- Design pattern understanding
-## Known Issues
-- The use of the API Client and connecting to the controller : Code Has been Fixed
-- Silent Failure in Terminal: Rerun the program and make sure the API Key is correct
+### AI/LLM Usage Disclosure
+Gemini was used for general debugging help. However, no code was ever copied directly.
+To offer some specific cases it was used for: debugging asyncronous calls to the service
+to update the GUI and assistance with troubleshooting GUI layout. However, this was largely
+to understand what was wrong so that we could review the appropriate documenation directly.
 
 ## Future Enhancements
 - Implementation of Images
-- More Customization to the Story
-  - Style
-  - Setting
-  - Tags
+- Tagging options
 
