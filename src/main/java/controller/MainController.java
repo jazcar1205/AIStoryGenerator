@@ -144,8 +144,12 @@ public class MainController {
         try {
             String storyResult = storyFuture.get(); // Will block thread from moving on until this is completed.
             //System.out.println("Story successfully generated and retrieved from Future.");
-            model.setStory(storyResult);
-            return storyResult;
+            if(storyResult != null)
+            {
+                model.setStory(storyResult);
+                return storyResult;
+            }
+            return model.getStory();
         } catch (InterruptedException | ExecutionException e) {
             System.err.println("Error retrieving story from executor: " + e.getMessage());
             return null;
