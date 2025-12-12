@@ -27,6 +27,24 @@ for this as well, the UI will always update.
 **Singleton**: This is implemeneted in the API Client and service to ensure only one API service
 instance manages all requests.
 
+## OOP Four Pillars
+### Encapsulation
+  All of or classes have private instance variables that are only accessible an mutable by methods we determined. 
+For example, the story model has all private fields that can only be set through the correct methods.
+
+### Abstraction
+  For our strategies, we created an abstract StoryStrategy class. From this class, all other strategies can be created
+with the specified methods included. 
+
+### Polymorphisim
+  Also with our strategies, we are able to easily switch through them in the controller. The controller has a StoryStrategy
+object that can be set to any one of the strategy classes. The rest of the code does not necessarily need to know which one 
+was chosen, as all strategy classes have generateStory(). 
+
+### Inheritance
+Our model extends the class Observer. This gives it access to all the methods related to observer, including addObservers() and
+notifyAll(). We are able to call these functions without needing to write them ourselves. 
+
 ## Challenges Faced
 
 ### Challenge 1: API Rate Limiting
