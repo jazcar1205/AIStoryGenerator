@@ -5,8 +5,8 @@
 - Cedar Hudgens 
 
 ## Demo Link
-- Check in: https://www.youtube.com/watch?v=kytr02STaDs
-- Final Demo: 
+- Check in Demo: https://www.youtube.com/watch?v=kytr02STaDs
+- Final Demo: https://www.youtube.com/watch?v=EDmgZXrFrrE
 
 ## Project Description
 The Interactive Storytelling Application uses AI to create stories based on what the user writes or chooses. Users can pick a genre, make characters, and shape the world of their story. The app can build different types of stories and let users save or export them.
